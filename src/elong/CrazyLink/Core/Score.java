@@ -41,44 +41,44 @@ public class Score {
 	//奖励规则，可以自己调整
 	public void award(int clearNum)
 	{
-		int award = 0;
-		switch (clearNum)
-		{
-		case 3:
-			award = 100;
-			break;
-		case 4:
-			award = 500;
-			break;
-		case 5:
-			award = 1000;
-			break;
-		case 6:
-			award = 5000;
-			break;
-		case 7:
-			award = 10000;
-			break;
-		case 8:
-			award = 50000;
-			break;
-		case 9:
-			award = 100000;
-			break;
-		case 10:
-			award = 500000;
-			break;
-		case 11:
-			award = 1000000;
-			break;
-		default:
-			if(clearNum > 11)
-			{
-				award = 500000 * clearNum;
-			}
-			break;
-		}
-		awardScore(mAwardRatio*award);
+		int award = 20;
+//		switch (clearNum)
+//		{
+//		case 3:
+//			award = 100;
+//			break;
+//		case 4:
+//			award = 500;
+//			break;
+//		case 5:
+//			award = 1000;
+//			break;
+//		case 6:
+//			award = 5000;
+//			break;
+//		case 7:
+//			award = 10000;
+//			break;
+//		case 8:
+//			award = 50000;
+//			break;
+//		case 9:
+//			award = 100000;
+//			break;
+//		case 10:
+//			award = 500000;
+//			break;
+//		case 11:
+//			award = 1000000;
+//			break;
+//		default:
+//			if(clearNum > 11)
+//			{
+//				award = 500000 * clearNum;
+//			}
+//			break;
+//		}
+		awardScore(award * clearNum);
 	}
 	
 	//本次奖励的分数
@@ -111,7 +111,7 @@ public class Score {
 	{
 		mAwardRatio = 0;
 		mContinueCnt = 0;
-		lifeDelMsg();
+//		lifeDelMsg();
 	}
 	
 	//递增分数系数
