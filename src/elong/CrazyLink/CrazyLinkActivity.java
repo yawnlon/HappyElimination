@@ -12,6 +12,9 @@
 package elong.CrazyLink;
 
 import elong.CrazyLink.Core.ControlCenter;
+
+import com.yawnlon.kitchenkongfu.R;
+
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;

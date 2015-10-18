@@ -5,38 +5,50 @@
  * should not be modified by hand.
  */
 
-package elong.CrazyLink;
+package com.yawnlon.kitchenkongfu;
 
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int transparent=0x7f050001;
+        public static final int white=0x7f050000;
+    }
     public static final class drawable {
         public static final int animal=0x7f020000;
         public static final int autotip=0x7f020001;
-        public static final int bomb=0x7f020002;
-        public static final int cover=0x7f020003;
-        public static final int explosion=0x7f020004;
-        public static final int grid=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int icon=0x7f020007;
-        public static final int life=0x7f020008;
-        public static final int life_add=0x7f020009;
-        public static final int life_del=0x7f02000a;
-        public static final int loading_01=0x7f02000b;
-        public static final int loading_02=0x7f02000c;
-        public static final int loading_03=0x7f02000d;
-        public static final int loading_04=0x7f02000e;
-        public static final int loading_05=0x7f02000f;
-        public static final int loading_06=0x7f020010;
-        public static final int loading_07=0x7f020011;
-        public static final int loading_08=0x7f020012;
-        public static final int loading_09=0x7f020013;
-        public static final int loading_10=0x7f020014;
-        public static final int number=0x7f020015;
-        public static final int result=0x7f020016;
-        public static final int time=0x7f020017;
-        public static final int word=0x7f020018;
-        public static final int word2=0x7f020019;
+        public static final int background=0x7f020002;
+        public static final int board=0x7f020003;
+        public static final int bomb=0x7f020004;
+        public static final int chessboard=0x7f020005;
+        public static final int cover=0x7f020006;
+        public static final int explosion=0x7f020007;
+        public static final int grid=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
+        public static final int icon=0x7f02000a;
+        public static final int life=0x7f02000b;
+        public static final int life_add=0x7f02000c;
+        public static final int life_del=0x7f02000d;
+        public static final int loading_01=0x7f02000e;
+        public static final int loading_02=0x7f02000f;
+        public static final int loading_03=0x7f020010;
+        public static final int loading_04=0x7f020011;
+        public static final int loading_05=0x7f020012;
+        public static final int loading_06=0x7f020013;
+        public static final int loading_07=0x7f020014;
+        public static final int loading_08=0x7f020015;
+        public static final int loading_09=0x7f020016;
+        public static final int loading_10=0x7f020017;
+        public static final int number=0x7f020018;
+        public static final int result=0x7f020019;
+        public static final int time=0x7f02001a;
+        public static final int word=0x7f02001b;
+        public static final int word2=0x7f02001c;
+    }
+    public static final class id {
+        public static final int game=0x7f080002;
+        public static final int score=0x7f080001;
+        public static final int time=0x7f080000;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -61,8 +73,8 @@ public final class R {
         public static final int s_timeover=0x7f040010;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int hello=0x7f050000;
+        public static final int app_name=0x7f060001;
+        public static final int hello=0x7f060000;
     }
     public static final class style {
         /** 
@@ -75,10 +87,10 @@ public final class R {
             backward-compatibility can go here.
         
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }

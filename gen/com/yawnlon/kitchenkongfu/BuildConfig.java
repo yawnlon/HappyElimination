@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package elong.CrazyLink;
+package com.yawnlon.kitchenkongfu;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

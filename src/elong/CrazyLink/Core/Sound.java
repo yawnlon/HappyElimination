@@ -14,7 +14,7 @@ package elong.CrazyLink.Core;
 import java.util.HashMap;
 
 import elong.CrazyLink.CrazyLinkConstent.E_SOUND;
-import elong.CrazyLink.R;
+import com.yawnlon.kitchenkongfu.R;
 
 import android.content.Context;
 import android.media.AudioManager;

@@ -23,7 +23,9 @@ import android.os.Handler;
 import android.os.Message;
 import elong.CrazyLink.CrazyLinkConstent;
 import elong.CrazyLink.CrazyLinkConstent.E_SCENARIO;
-import elong.CrazyLink.R;
+
+import com.yawnlon.kitchenkongfu.MainActivity;
+import com.yawnlon.kitchenkongfu.R;
 import elong.CrazyLink.Control.CtlDisappear;
 import elong.CrazyLink.Control.CtlExchange;
 import elong.CrazyLink.Control.CtlLifeAdd;
@@ -56,7 +58,7 @@ import elong.CrazyLink.Interface.IControl;
 
 public class ControlCenter {
 
-	Context mContext;
+	static Context mContext;
 	public static E_SCENARIO mScene;
 
 	static ActionTokenPool mToken; // 操作令牌，只有获取到令牌才能操作
@@ -273,7 +275,7 @@ public class ControlCenter {
 				drawDisappear.control.start();
 			}
 			drawExplosion.control.start();
-//			mScore.increase();
+			// mScore.increase();
 			mScore.calcTotal(markCount);
 			mScore.increase(markCount);
 		} else {
@@ -828,6 +830,7 @@ public class ControlCenter {
 	public static final int LIFEADD_END = 14;
 	public static final int LIFEDEL_START = 15;
 	public static final int LIFEDEL_END = 16;
+	public static final int REFRESH_UI = 17;
 
 	// 消息处理
 	public static Handler mHandler = new Handler() {
@@ -965,6 +968,10 @@ public class ControlCenter {
 				mScore.decreaseLife();
 				break;
 			}
+			case REFRESH_UI: {
+				((MainActivity) mContext).setScore(mScore.getScore());
+				((MainActivity) mContext).setTime(mTimer.getLeftTime());
+			}
 			}
 		}
 	};
@@ -1002,14 +1009,17 @@ public class ControlCenter {
 			drawLoading.draw(gl);
 			return;
 		}
-		drawScore.draw(gl, mScore.getScore(), 0);
+		// drawScore.draw(gl, mScore.getScore(), 0);
+		// ((MainActivity) mContext).setScore(mScore.getScore());
 		drawLife.draw(gl, mScore.mLife);
 		drawSingleScore.draw(gl, mSingleScoreW, mSingleScoreH, mScore.getAward());
 		drawTip1.draw(gl);
 		drawTip2.draw(gl);
 		drawLifeAdd.draw(gl);
 		drawLifeDel.draw(gl);
-		drawTimeBar.draw(gl, mTimer.getLeftTime());
+		// drawTimeBar.draw(gl, mTimer.getLeftTime());
+		mHandler.sendEmptyMessage(REFRESH_UI);
+//		((MainActivity) mContext).setTime(mTimer.getLeftTime());
 
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
