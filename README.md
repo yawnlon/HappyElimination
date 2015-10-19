@@ -1,6 +1,10 @@
 # HappyElimination
 开心消消乐 Android Eclipse Project~
 
+# Note
+1、ControlCenter.init() 对7*7格子进行初始化，可在这里进行多一些目标食物
+2、ControlCenter.markDisappear() 可以标记是否为target
+
 # 声明
 本工程借鉴了以下作者的成果，如有侵权，本人会在第一时间删除
 
