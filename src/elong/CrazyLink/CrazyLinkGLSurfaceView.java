@@ -66,11 +66,12 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 		if (screenTouch != null) {
 			if (ControlCenter.mScene == E_SCENARIO.GAME) {
 				screenTouch.touchGameView(e);
-			} else if (ControlCenter.mScene == E_SCENARIO.MENU) {
-				screenTouch.touchMenuView(e);
-			} else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
-				screenTouch.touchResultView(e);
 			}
+//			else if (ControlCenter.mScene == E_SCENARIO.MENU) {
+//				screenTouch.touchMenuView(e);
+//			} else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
+//				screenTouch.touchResultView(e);
+//			}
 		}
 		return true;
 	}
@@ -86,11 +87,14 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 
 			if (ControlCenter.mScene == E_SCENARIO.GAME) {
 				controlCenter.drawGameScene(gl);
-			} else if (ControlCenter.mScene == E_SCENARIO.MENU) {
-				controlCenter.drawMenuScene(gl);
-			} else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
-				controlCenter.drawResultScene(gl);
-			}
+			} 
+			else if (ControlCenter.mScene == E_SCENARIO.MENU) {
+//				controlCenter.drawMenuScene(gl);
+				screenTouch.raiseTouchMenuViewEvent();
+			} 
+//			else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
+//				controlCenter.drawResultScene(gl);
+//			}
 
 		}
 

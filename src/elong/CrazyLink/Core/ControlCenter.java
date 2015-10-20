@@ -793,10 +793,10 @@ public class ControlCenter {
 		gl.glGenTextures(1, textures, 0);
 		int currTextureId = textures[0];
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, currTextureId);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);// ָ����С���˷���
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);// ָ���Ŵ���˷���
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);// ָ��S�������ͼģʽ
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);// ָ��T�������ͼģʽ
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
 		InputStream is = mContext.getResources().openRawResource(drawableId);
 		Bitmap bitmapTmp;
 		try {
@@ -947,7 +947,7 @@ public class ControlCenter {
 				break;
 			}
 			case GAME_OVER_END: {
-				mScene = E_SCENARIO.RESULT;
+//				mScene = E_SCENARIO.RESULT;
 				break;
 			}
 			case LIFEADD_START: {
@@ -1010,16 +1010,14 @@ public class ControlCenter {
 			return;
 		}
 		// drawScore.draw(gl, mScore.getScore(), 0);
-		// ((MainActivity) mContext).setScore(mScore.getScore());
-		drawLife.draw(gl, mScore.mLife);
+//		drawLife.draw(gl, mScore.mLife);
 		drawSingleScore.draw(gl, mSingleScoreW, mSingleScoreH, mScore.getAward());
 		drawTip1.draw(gl);
 		drawTip2.draw(gl);
-		drawLifeAdd.draw(gl);
-		drawLifeDel.draw(gl);
+//		drawLifeAdd.draw(gl);
+//		drawLifeDel.draw(gl);
 		// drawTimeBar.draw(gl, mTimer.getLeftTime());
 		mHandler.sendEmptyMessage(REFRESH_UI);
-//		((MainActivity) mContext).setTime(mTimer.getLeftTime());
 
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
