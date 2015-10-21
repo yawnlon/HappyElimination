@@ -160,6 +160,15 @@ public class ControlCenter {
 		}
 
 	}
+	
+	public static void refresh() {
+		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
+			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
+				ControlCenter.mAnimalPic[i][j] = 0;
+			}
+		}
+		markFill();
+	}
 
 	public static int takeToken() {
 		return mToken.takeToken();
