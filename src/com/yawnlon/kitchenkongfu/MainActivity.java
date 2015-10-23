@@ -15,7 +15,7 @@ import elong.CrazyLink.Core.ControlCenter;
 public class MainActivity extends Activity {
 
 	private CrazyLinkGLSurfaceView mGLSurfaceView;
-	private TextView time, score;
+	private TextView time, score, target;
 	private Button refresh, pause;
 	private Context context;
 
@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 
 		time = (TextView) findViewById(R.id.time);
 		score = (TextView) findViewById(R.id.score);
+		target = (TextView) findViewById(R.id.target_score);
 
 		refresh = (Button) findViewById(R.id.refresh);
 		refresh.setOnClickListener(new OnClickListener() {
@@ -59,6 +60,10 @@ public class MainActivity extends Activity {
 
 	public void setScore(int score) {
 		this.score.setText(Integer.toString(score));
+	}
+	
+	public void setTargetScore(int score) {
+		this.target.setText(Integer.toString(score));
 	}
 
 	@Override

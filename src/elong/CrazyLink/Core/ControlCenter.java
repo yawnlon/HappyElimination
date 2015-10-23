@@ -24,6 +24,7 @@ import android.os.Message;
 import elong.CrazyLink.CrazyLinkConstent;
 import elong.CrazyLink.CrazyLinkConstent.E_SCENARIO;
 
+import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.MainActivity;
 import com.yawnlon.kitchenkongfu.R;
 import elong.CrazyLink.Control.CtlDisappear;
@@ -113,6 +114,7 @@ public class ControlCenter {
 	static public DrawTimeBar drawTimeBar;
 
 	public static Score mScore; // 计算分数
+	public static Score mTargetScore; // 计算目标分数
 	public static Sound mSound;
 	public static Timer mTimer;
 
@@ -136,6 +138,7 @@ public class ControlCenter {
 		mScene = E_SCENARIO.MENU;
 		mContext = context;
 		mScore = new Score();
+		mTargetScore = new Score();
 		mSound = new Sound(context);
 		mTimer = new Timer(CrazyLinkConstent.MAX_TIME);
 		mAnimalPic = new int[(int) CrazyLinkConstent.GRID_NUM][(int) CrazyLinkConstent.GRID_NUM];
@@ -160,7 +163,7 @@ public class ControlCenter {
 		}
 
 	}
-	
+
 	public static void refresh() {
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
@@ -180,6 +183,9 @@ public class ControlCenter {
 
 	// 产生1~7的随机数
 	static int getRandom() {
+		int rConfig = LevelConfig.getConfigRandom();
+		if (rConfig != 0)
+			return rConfig;
 		int data = (int) (Math.random() * 100);
 		return (data % 7) + 1;
 	}
@@ -304,6 +310,9 @@ public class ControlCenter {
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
 				if (EFT_DISAPPEAR == mEffect[i][j] && (token == mDisappearToken[i][j])) {
+					if (LevelConfig.isTarget(mAnimalPic[i][j])) {
+						clearCount += 100;
+					}
 					mAnimalPic[i][j] = 0;
 					mEffect[i][j] = EFT_NORMAL;
 					mDisappearToken[i][j] = -1;
@@ -897,6 +906,10 @@ public class ControlCenter {
 				int token = b.getInt("token");
 				int clearCnt = clearPic(token);
 				unMarkDisappear(token);
+				if (clearCnt > 100) {
+					clearCnt = clearCnt % 100;
+					mTargetScore.award(clearCnt);
+				}
 				mScore.award(clearCnt);
 				if (mScore.getAward() > 0) {
 					CtlTip1 ctl = (CtlTip1) drawTip1.control;
@@ -956,7 +969,7 @@ public class ControlCenter {
 				break;
 			}
 			case GAME_OVER_END: {
-//				mScene = E_SCENARIO.RESULT;
+				// mScene = E_SCENARIO.RESULT;
 				break;
 			}
 			case LIFEADD_START: {
@@ -979,6 +992,7 @@ public class ControlCenter {
 			}
 			case REFRESH_UI: {
 				((MainActivity) mContext).setScore(mScore.getScore());
+				((MainActivity) mContext).setTargetScore(mTargetScore.getScore());
 				((MainActivity) mContext).setTime(mTimer.getLeftTime());
 			}
 			}
@@ -1019,12 +1033,12 @@ public class ControlCenter {
 			return;
 		}
 		// drawScore.draw(gl, mScore.getScore(), 0);
-//		drawLife.draw(gl, mScore.mLife);
+		// drawLife.draw(gl, mScore.mLife);
 		drawSingleScore.draw(gl, mSingleScoreW, mSingleScoreH, mScore.getAward());
 		drawTip1.draw(gl);
 		drawTip2.draw(gl);
-//		drawLifeAdd.draw(gl);
-//		drawLifeDel.draw(gl);
+		// drawLifeAdd.draw(gl);
+		// drawLifeDel.draw(gl);
 		// drawTimeBar.draw(gl, mTimer.getLeftTime());
 		mHandler.sendEmptyMessage(REFRESH_UI);
 
