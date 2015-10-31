@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -21,7 +22,7 @@
         android:layout_width="162dp"
         android:layout_height="135dp"
         android:layout_alignParentRight="true"
-        android:background="@drawable/board"
+        android:background="@drawable/scoreboard"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="30dp" >
@@ -31,17 +32,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <TextView
+            <yawnlon.android.widget.YTtfTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time: "
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:font_path="test.ttf" />
 
-            <TextView
+            <yawnlon.android.widget.YTtfTextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:font_path="test.ttf" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,31 +52,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <TextView
+            <yawnlon.android.widget.YTtfTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Score: "
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:font_path="test.ttf" />
 
-            <TextView
+            <yawnlon.android.widget.YTtfTextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                app:font_path="test.ttf" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <TextView
+            <yawnlon.android.widget.YTtfTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TargetScore: "
                 android:textSize="15sp" />
 
-            <TextView
+            <yawnlon.android.widget.YTtfTextView
                 android:id="@+id/target_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,11 +91,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Refresh" />
+
     <Button
         android:id="@+id/pause"
-        android:layout_toRightOf="@id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/refresh"
         android:text="Pause" />
 
 </RelativeLayout>

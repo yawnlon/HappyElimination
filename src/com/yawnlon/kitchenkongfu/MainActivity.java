@@ -11,11 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import elong.CrazyLink.CrazyLinkGLSurfaceView;
 import elong.CrazyLink.Core.ControlCenter;
+import yawnlon.android.widget.YTtfTextView;
 
 public class MainActivity extends Activity {
 
 	private CrazyLinkGLSurfaceView mGLSurfaceView;
-	private TextView time, score, target;
+	private YTtfTextView time, score, target;
 	private Button refresh, pause;
 	private Context context;
 
@@ -26,9 +27,10 @@ public class MainActivity extends Activity {
 		context = this;
 		mGLSurfaceView = (CrazyLinkGLSurfaceView) findViewById(R.id.game);
 
-		time = (TextView) findViewById(R.id.time);
-		score = (TextView) findViewById(R.id.score);
-		target = (TextView) findViewById(R.id.target_score);
+		time = (YTtfTextView) findViewById(R.id.time);
+		time.setTypeface("test.ttf");
+		score = (YTtfTextView) findViewById(R.id.score);
+		target = (YTtfTextView) findViewById(R.id.target_score);
 
 		refresh = (Button) findViewById(R.id.refresh);
 		refresh.setOnClickListener(new OnClickListener() {
