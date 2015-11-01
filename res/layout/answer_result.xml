@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_pre"
+    android:gravity="center_horizontal|right"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/dialog"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/answer_result_dialog"
+        android:gravity="right"
+        android:orientation="vertical"
+        android:paddingRight="35dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You&apos;ve got "
+                android:textColor="#669933"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#f89b2c"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" right and"
+                android:textColor="#669933"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="won a recipe book! "
+                android:textColor="#669933"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:background="@drawable/tool_hint" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here&apos;s correct answer!"
+            android:textColor="#669933"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/answer_result_foods" />
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/next"
+        android:scaleType="centerInside" >
+    </ImageView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/answer_result_tool"
+        android:scaleType="centerInside" >
+    </ImageView>
+
+</LinearLayout>

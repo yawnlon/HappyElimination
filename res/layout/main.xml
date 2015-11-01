@@ -19,6 +19,7 @@
         android:layout_centerInParent="true" />
 
     <LinearLayout
+        android:id="@+id/score_board"
         android:layout_width="162dp"
         android:layout_height="135dp"
         android:layout_alignParentRight="true"
@@ -36,15 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time: "
-                android:textSize="15sp"
-                app:font_path="test.ttf" />
+                android:textSize="15sp" />
 
             <yawnlon.android.widget.YTtfTextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                app:font_path="test.ttf" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,15 +55,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Score: "
-                android:textSize="15sp"
-                app:font_path="test.ttf" />
+                android:textSize="15sp" />
 
             <yawnlon.android.widget.YTtfTextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                app:font_path="test.ttf" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,16 +84,36 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Refresh" />
-
-    <Button
         android:id="@+id/pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/refresh"
         android:text="Pause" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <com.yawnlon.kitchenkongfu.view.ToolView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:type="0" />
+
+        <com.yawnlon.kitchenkongfu.view.ToolView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            app:type="1" />
+
+        <com.yawnlon.kitchenkongfu.view.ToolView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            app:type="2" />
+    </LinearLayout>
 
 </RelativeLayout>

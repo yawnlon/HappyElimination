@@ -134,7 +134,7 @@ public class DrawSingleScore {
         */			
 		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
 		paint.setTextSize(mFontSize);	
-		paint.setColor(Color.RED);
+		paint.setColor(Color.rgb(102, 153, 51));
 		String str = Integer.toString(score);			
 		canvas.drawText(str, 20, 28, paint);	//书写的位置，根据具体情况可以调整一下			
 

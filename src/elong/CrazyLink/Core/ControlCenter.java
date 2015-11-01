@@ -441,7 +441,7 @@ public class ControlCenter {
 
 	// 自动提示识别算法
 	// 只需要交换一步就能成行的，认为满足自动提示条件
-	boolean autoTipMethod(int col, int row) {
+	static boolean autoTipMethod(int col, int row) {
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
 				exchange(mPicBak, i, j, i - 1, j);
@@ -484,7 +484,19 @@ public class ControlCenter {
 				}
 			}
 		}
+		refresh();
 	}
+
+//	static boolean canRun() {
+//		for (int i = 1; i < (int) CrazyLinkConstent.GRID_NUM - 1; i++) {
+//			for (int j = 1; j < (int) CrazyLinkConstent.GRID_NUM - 1; j++) {
+//				if (autoTipMethod(i, j)) {
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+//	}
 
 	// 将可以自动提示的动物标识出来
 	static void markAutoTip() {
@@ -694,7 +706,7 @@ public class ControlCenter {
 	public void initTexture(GL10 gl) {
 		menuTextureId = initTexture(gl, R.drawable.cover);
 		resultTextureId = initTexture(gl, R.drawable.result);
-		animalTextureId = initTexture(gl, R.drawable.animal); // 初始化纹理对象
+		animalTextureId = initTexture(gl, LevelConfig.getLevelRes()); // 初始化纹理对象
 		for (int i = 0; i < 10; i++) {
 			loadingTextureId[i] = initTexture(gl, R.drawable.loading_01 + i);
 		}
@@ -705,7 +717,7 @@ public class ControlCenter {
 		tip2TextureId = initTexture(gl, R.drawable.word2);
 		fireTextureId = initTexture(gl, R.drawable.autotip);
 		explosionTextureId = initTexture(gl, R.drawable.explosion);
-		monsterTextureId = initTexture(gl, R.drawable.animal);
+		monsterTextureId = initTexture(gl, LevelConfig.getLevelRes());
 		bombTextureId = initTexture(gl, R.drawable.bomb);
 		lifeAddTextureId = initTexture(gl, R.drawable.life_add);
 		lifeDelTextureId = initTexture(gl, R.drawable.life_del);
@@ -939,6 +951,8 @@ public class ControlCenter {
 					}
 				}
 				clearAutoTip();
+//				if (!canRun())
+//					refresh();
 				break;
 			case SCREEN_TOUCH:
 				Bundle b = msg.getData();

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ToolView -->
+    <declare-styleable name="ToolView">
+        <attr name="type" format="integer" />
+    </declare-styleable>
+
+</resources>

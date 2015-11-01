@@ -8,16 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import elong.CrazyLink.CrazyLinkGLSurfaceView;
 import elong.CrazyLink.Core.ControlCenter;
 import yawnlon.android.widget.YTtfTextView;
+import yawnlon.android.widget.YTtfHelper;
 
 public class MainActivity extends Activity {
 
 	private CrazyLinkGLSurfaceView mGLSurfaceView;
 	private YTtfTextView time, score, target;
-	private Button refresh, pause;
+	private Button pause;
 	private Context context;
 
 	@Override
@@ -28,17 +28,9 @@ public class MainActivity extends Activity {
 		mGLSurfaceView = (CrazyLinkGLSurfaceView) findViewById(R.id.game);
 
 		time = (YTtfTextView) findViewById(R.id.time);
-		time.setTypeface("test.ttf");
 		score = (YTtfTextView) findViewById(R.id.score);
 		target = (YTtfTextView) findViewById(R.id.target_score);
-
-		refresh = (Button) findViewById(R.id.refresh);
-		refresh.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ControlCenter.refresh();
-			}
-		});
+		YTtfHelper.applyFont(context, findViewById(R.id.score_board), "lewime.ttf");
 
 		pause = (Button) findViewById(R.id.pause);
 		pause.setOnClickListener(new OnClickListener() {
@@ -63,7 +55,7 @@ public class MainActivity extends Activity {
 	public void setScore(int score) {
 		this.score.setText(Integer.toString(score));
 	}
-	
+
 	public void setTargetScore(int score) {
 		this.target.setText(Integer.toString(score));
 	}
