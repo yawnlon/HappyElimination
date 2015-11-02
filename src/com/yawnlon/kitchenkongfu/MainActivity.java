@@ -1,5 +1,6 @@
 package com.yawnlon.kitchenkongfu;
 
+import com.yawnlon.kitchenkongfu.view.LevelResultDialog;
 import com.yawnlon.kitchenkongfu.view.YinYangView;
 
 import android.app.Activity;
@@ -57,6 +58,8 @@ public class MainActivity extends Activity {
 		this.time.setText(time + "s");
 		if (time <= 0) {
 			// TODO fail
+			new LevelResultDialog(context).setScore(Integer.parseInt(score.getText().toString()))
+					.setType(LevelResultDialog.FAIL).show();
 		}
 	}
 
@@ -68,6 +71,8 @@ public class MainActivity extends Activity {
 		this.target.setText(Integer.toString(score));
 		if (mYYView.setScore(score)) {
 			// TODO: 达到目标！
+			new LevelResultDialog(context).setScore(Integer.parseInt(this.score.getText().toString()))
+					.setType(LevelResultDialog.SUCCESS).show();
 		}
 	}
 
