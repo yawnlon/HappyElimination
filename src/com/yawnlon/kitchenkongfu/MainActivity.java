@@ -1,5 +1,7 @@
 package com.yawnlon.kitchenkongfu;
 
+import com.yawnlon.kitchenkongfu.view.YinYangView;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +21,7 @@ public class MainActivity extends Activity {
 	private YTtfTextView time, score, target;
 	private Button pause;
 	private Context context;
+	private YinYangView mYYView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,10 +49,15 @@ public class MainActivity extends Activity {
 				}).show();
 			}
 		});
+
+		mYYView = (YinYangView) findViewById(R.id.yin_yang);
 	}
 
 	public void setTime(int time) {
 		this.time.setText(time + "s");
+		if (time <= 0) {
+			// TODO fail
+		}
 	}
 
 	public void setScore(int score) {
@@ -58,6 +66,13 @@ public class MainActivity extends Activity {
 
 	public void setTargetScore(int score) {
 		this.target.setText(Integer.toString(score));
+		if (mYYView.setScore(score)) {
+			// TODO: 达到目标！
+		}
+	}
+
+	public void addTime(int time) {
+		ControlCenter.mTimer.addTime(time);
 	}
 
 	@Override
@@ -81,8 +96,12 @@ public class MainActivity extends Activity {
 		super.onResume();
 		if (mGLSurfaceView != null)
 			mGLSurfaceView.onResume();
-		if (ControlCenter.mTimer != null)
+		if (ControlCenter.mTimer != null) {
 			ControlCenter.mTimer.resume();
+			setTime(ControlCenter.mTimer.getLeftTime());
+		}
+		if (ControlCenter.mScore != null)
+			setTargetScore(ControlCenter.mScore.getScore());
 	}
 
 	@Override

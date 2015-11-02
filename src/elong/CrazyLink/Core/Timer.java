@@ -79,4 +79,7 @@ public class Timer {
 		return (int)mLeftTime;
 	}
 
+	public void addTime(int time) {
+		mStartTime += time;
+	}
 }

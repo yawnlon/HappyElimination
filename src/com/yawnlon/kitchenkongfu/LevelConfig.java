@@ -8,8 +8,13 @@ public class LevelConfig {
 			R.drawable.animal, R.drawable.animal, R.drawable.animal, R.drawable.animal };
 
 	private static final String LEVEL_TARGET[] = { "10000000" };
-	private static final String RANDOM_CONFIG[] = { "2111111" };
+	private static final String RANDOM_CONFIG[] = { "4111111" };
 	private static final int LEVEL_TYPE[] = { 0 }; // 0 代表COLD, 1代表HOT
+	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 600 };
+
+	public static int getTotalTargetScore() {
+		return LEVEL_TOTAL_TARGET_SCORE[CURRENT_LEVEL];
+	}
 
 	public static int getCurrentLevel() {
 		return CURRENT_LEVEL + 1;
@@ -73,7 +78,7 @@ public class LevelConfig {
 	/**
 	 * Tool Config
 	 */
-	public static int[] TOOL_NUM = { 1, 1, 1 };
+	public static int[] TOOL_NUM = { 1, 3, 0 };
 	public static int[] TOOL_RESID = { R.drawable.tool_hint, R.drawable.tool_addtime, R.drawable.tool_spoon };
 	public final static int TOOL_HINT = 0;
 	public final static int TOOL_ADDTIME = 1;

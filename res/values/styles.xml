@@ -16,5 +16,11 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <!-- 定义hint popupwindows动画效果 -->
+ <style name="HintAnimationPreview">  
+     <item name="android:windowEnterAnimation">@anim/hint_entry</item>  
+     <item name="android:windowExitAnimation">@anim/hint_exit</item>  
+ </style>
 
 </resources>

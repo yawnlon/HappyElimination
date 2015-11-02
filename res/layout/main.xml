@@ -99,6 +99,7 @@
         android:orientation="horizontal" >
 
         <com.yawnlon.kitchenkongfu.view.ToolView
+            android:id="@+id/hints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:type="0" />
@@ -106,14 +107,19 @@
         <com.yawnlon.kitchenkongfu.view.ToolView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="30dp"
             app:type="1" />
 
         <com.yawnlon.kitchenkongfu.view.ToolView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="30dp"
             app:type="2" />
     </LinearLayout>
+
+    <com.yawnlon.kitchenkongfu.view.YinYangView
+        android:id="@+id/yin_yang"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
 </RelativeLayout>
