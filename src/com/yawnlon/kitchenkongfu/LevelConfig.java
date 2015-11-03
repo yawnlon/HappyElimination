@@ -54,13 +54,21 @@ public class LevelConfig {
 	 * Food Picture Config
 	 */
 	private final static int[] foodsID = { R.drawable.food1, R.drawable.food2, R.drawable.food3, R.drawable.food4,
-			R.drawable.food5, R.drawable.food6, R.drawable.food7, R.drawable.food8, R.drawable.food9 };
+			R.drawable.food5, R.drawable.food6, R.drawable.food7, R.drawable.food8, R.drawable.food9, R.drawable.food10,
+			R.drawable.food11, R.drawable.food12, R.drawable.food13, R.drawable.food14, R.drawable.food15 };
 
 	public static int getFood(int id) {
 		return foodsID[id - 1];
 	}
 
-	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "24", "62", "412", "784" }; // 每一关的targetFood，n对应R.drawable.answer_foodn
+	// 每一关的targetFood，n对应R.drawable.answer_foodn
+	// : -> 10,
+	// ; -> 11,
+	// < -> 12,
+	// = -> 13
+	// > -> 14
+	// ? -> 15
+	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "24", "62", "412", "784" };
 
 	public static String getTargetFood() {
 		return LEVEL_TARGET_FOOD[CURRENT_LEVEL];
