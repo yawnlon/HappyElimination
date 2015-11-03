@@ -68,7 +68,7 @@ public class LevelConfig {
 	// = -> 13
 	// > -> 14
 	// ? -> 15
-	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "24", "62", "412", "784" };
+	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "2;", "6=", "<9:", "652" };
 
 	public static String getTargetFood() {
 		return LEVEL_TARGET_FOOD[CURRENT_LEVEL];
