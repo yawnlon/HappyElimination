@@ -89,15 +89,15 @@ public class ControlCenter {
 	int monsterTextureId;
 	int bombTextureId;
 
-	static int mAutoTipTimer = 0; // 自动提示计时器
+	static int mAutoTipTimer; // 自动提示计时器
 
 	static public DrawBackGround drawMenuBackGround;
 	static public DrawBackGround drawResultBackGround;
 	static public DrawAnimal drawAnimal;
 	static public DrawLoading drawLoading;
 	static public DrawGrid drawGrid;
-	static ArrayList<DrawExchange> mDrawExchangeList = new ArrayList<DrawExchange>();
-	static ArrayList<DrawDisappear> mDrawDisappearList = new ArrayList<DrawDisappear>();
+	static ArrayList<DrawExchange> mDrawExchangeList;
+	static ArrayList<DrawDisappear> mDrawDisappearList;
 	static public DrawFill drawFill;
 	static public DrawScore drawScore;
 	static public DrawScore drawResultScore;
@@ -118,8 +118,8 @@ public class ControlCenter {
 	public static Sound mSound;
 	public static Timer mTimer;
 
-	public static boolean mIsLoading = false; // 显示正在加载
-	public static boolean mIsAutoTip = false; // 处于自动提示状态
+	public static boolean mIsLoading; // 显示正在加载
+	public static boolean mIsAutoTip; // 处于自动提示状态
 
 	ArrayList<IControl> mControlList = new ArrayList<IControl>(); // 渲染类的控制列表
 
@@ -140,13 +140,31 @@ public class ControlCenter {
 		mScore = new Score();
 		mTargetScore = new Score();
 		mSound = new Sound(context);
-		mTimer = new Timer(CrazyLinkConstent.MAX_TIME);
+		mTimer = new Timer(LevelConfig.getMaxTime());
 		mAnimalPic = new int[(int) CrazyLinkConstent.GRID_NUM][(int) CrazyLinkConstent.GRID_NUM];
 		mPicBak = new int[(int) CrazyLinkConstent.GRID_NUM][(int) CrazyLinkConstent.GRID_NUM];
 		mEffect = new int[(int) CrazyLinkConstent.GRID_NUM][(int) CrazyLinkConstent.GRID_NUM];
 		mDisappearToken = new int[(int) CrazyLinkConstent.GRID_NUM][(int) CrazyLinkConstent.GRID_NUM];
 		mToken = new ActionTokenPool();
+		mIsLoading = false;
+		mIsAutoTip = false;
+		mDrawExchangeList = new ArrayList<DrawExchange>();
+		mDrawDisappearList = new ArrayList<DrawDisappear>();
+		mAutoTipTimer = 0;
 		init();
+	}
+
+	public static void onDestroy() {
+		mScene = null;
+		mScore = null;
+		mTargetScore = null;
+		mSound = null;
+		mTimer = null;
+		mAnimalPic = null;
+		mPicBak = null;
+		mEffect = null;
+		mDisappearToken = null;
+		mToken = null;
 	}
 
 	// 初始化逻辑，保证初始化以后的状态没有处于消除状态的
@@ -487,16 +505,16 @@ public class ControlCenter {
 		refresh();
 	}
 
-//	static boolean canRun() {
-//		for (int i = 1; i < (int) CrazyLinkConstent.GRID_NUM - 1; i++) {
-//			for (int j = 1; j < (int) CrazyLinkConstent.GRID_NUM - 1; j++) {
-//				if (autoTipMethod(i, j)) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-//	}
+	// static boolean canRun() {
+	// for (int i = 1; i < (int) CrazyLinkConstent.GRID_NUM - 1; i++) {
+	// for (int j = 1; j < (int) CrazyLinkConstent.GRID_NUM - 1; j++) {
+	// if (autoTipMethod(i, j)) {
+	// return true;
+	// }
+	// }
+	// }
+	// return false;
+	// }
 
 	// 将可以自动提示的动物标识出来
 	static void markAutoTip() {
@@ -739,7 +757,7 @@ public class ControlCenter {
 		drawTip2 = new DrawTip2(tip2TextureId);
 		drawLifeAdd = new DrawLifeAdd(lifeAddTextureId);
 		drawLifeDel = new DrawLifeDel(lifeDelTextureId);
-		drawTimeBar = new DrawTimeBar(gl, timeBarTextureId, CrazyLinkConstent.MAX_TIME);
+		drawTimeBar = new DrawTimeBar(gl, timeBarTextureId, LevelConfig.getMaxTime());
 
 		drawLoading = new DrawLoading(loadingTextureId); // 创建加载动画素材
 		drawAutoTip = new DrawAutoTip(fireTextureId);
@@ -951,8 +969,8 @@ public class ControlCenter {
 					}
 				}
 				clearAutoTip();
-//				if (!canRun())
-//					refresh();
+				// if (!canRun())
+				// refresh();
 				break;
 			case SCREEN_TOUCH:
 				Bundle b = msg.getData();

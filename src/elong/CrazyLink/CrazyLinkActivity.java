@@ -55,34 +55,34 @@ public class CrazyLinkActivity extends Activity {
 			}
 	}
 
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		ControlCenter.mTimer.pause();
-		super.onStop();
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		mGLSurfaceView.onResume();
-		ControlCenter.mTimer.resume();
-	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		mGLSurfaceView.onPause();
-		mp.pause();
-		ControlCenter.mTimer.pause();
-	}
-	
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		mp.stop();
-	}
+//	@Override
+//	protected void onStop() {
+//		// TODO Auto-generated method stub
+//		ControlCenter.mTimer.pause();
+//		super.onStop();
+//	}
+//
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		super.onResume();
+//		mGLSurfaceView.onResume();
+//		ControlCenter.mTimer.resume();
+//	}
+//
+//	@Override
+//	protected void onPause() {
+//		// TODO Auto-generated method stub
+//		super.onPause();
+//		mGLSurfaceView.onPause();
+//		mp.pause();
+//		ControlCenter.mTimer.pause();
+//	}
+//	
+//	@Override
+//	public void onDestroy() {
+//		// TODO Auto-generated method stub
+//		super.onDestroy();
+//		mp.stop();
+//	}
 }

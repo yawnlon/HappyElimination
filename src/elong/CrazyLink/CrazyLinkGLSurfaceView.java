@@ -10,6 +10,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Message;
+import android.preference.PreferenceManager.OnActivityDestroyListener;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -18,9 +19,9 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 	private SceneRenderer mRenderer;
 	Context mContext;
 
-	static boolean m_bThreadRun = false;
+	boolean m_bThreadRun = false;
 
-	static ControlCenter controlCenter;
+	ControlCenter controlCenter;
 
 	ScreenTouch screenTouch;
 
@@ -31,8 +32,8 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 		setZOrderOnTop(true);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-//		mGameSurfaceView.requestFocus();
-//		mGameSurfaceView.setFocusableInTouchMode(true);
+		// mGameSurfaceView.requestFocus();
+		// mGameSurfaceView.setFocusableInTouchMode(true);
 		setRenderer(mRenderer);
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
@@ -53,9 +54,8 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 				}
 			}.start();
 		}
-
 	}
-	
+
 	public CrazyLinkGLSurfaceView(Context context, AttributeSet attributeSet) {
 		// TODO Auto-generated constructor stub
 		this(context);
@@ -67,11 +67,11 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 			if (ControlCenter.mScene == E_SCENARIO.GAME) {
 				screenTouch.touchGameView(e);
 			}
-//			else if (ControlCenter.mScene == E_SCENARIO.MENU) {
-//				screenTouch.touchMenuView(e);
-//			} else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
-//				screenTouch.touchResultView(e);
-//			}
+			// else if (ControlCenter.mScene == E_SCENARIO.MENU) {
+			// screenTouch.touchMenuView(e);
+			// } else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
+			// screenTouch.touchResultView(e);
+			// }
 		}
 		return true;
 	}
@@ -87,14 +87,13 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 
 			if (ControlCenter.mScene == E_SCENARIO.GAME) {
 				controlCenter.drawGameScene(gl);
-			} 
-			else if (ControlCenter.mScene == E_SCENARIO.MENU) {
-//				controlCenter.drawMenuScene(gl);
+			} else if (ControlCenter.mScene == E_SCENARIO.MENU) {
+				// controlCenter.drawMenuScene(gl);
 				screenTouch.raiseTouchMenuViewEvent();
-			} 
-//			else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
-//				controlCenter.drawResultScene(gl);
-//			}
+			}
+			// else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
+			// controlCenter.drawResultScene(gl);
+			// }
 
 		}
 
@@ -119,7 +118,7 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 		public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 			gl.glDisable(GL10.GL_DITHER);
 			gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
-//			gl.glClearColor(255, 255, 255, 255);
+			// gl.glClearColor(255, 255, 255, 255);
 			gl.glShadeModel(GL10.GL_SMOOTH);
 			gl.glEnable(GL10.GL_DEPTH_TEST);
 

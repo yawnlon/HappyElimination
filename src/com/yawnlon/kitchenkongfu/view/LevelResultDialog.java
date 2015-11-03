@@ -3,21 +3,21 @@ package com.yawnlon.kitchenkongfu.view;
 import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.LevelInfoActivity;
 import com.yawnlon.kitchenkongfu.R;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import yawnlon.android.widget.YTtfHelper;
+import yawnlon.android.util.DensityUtil;
 
-public class LevelResultDialog extends Dialog {
+public class LevelResultDialog {
 
 	public final static int SUCCESS = 0;
 	public final static int FAIL = 1;
@@ -28,11 +28,14 @@ public class LevelResultDialog extends Dialog {
 	private FrameLayout root;
 	private ImageView btn;
 	private Activity context;
+	private AlertDialog alertDialog;
 
+	private View view;
+
+	@SuppressLint("InflateParams")
 	public LevelResultDialog(Context context) {
-		super(context);
 		this.context = (Activity) context;
-		View view = LayoutInflater.from(context).inflate(R.layout.level_result, null);
+		view = LayoutInflater.from(context).inflate(R.layout.level_result, null);
 		score = (TextView) view.findViewById(R.id.score);
 		bonusLayout = (LinearLayout) view.findViewById(R.id.bonus_layout);
 		bonus = (ImageView) view.findViewById(R.id.bonus);
@@ -41,8 +44,10 @@ public class LevelResultDialog extends Dialog {
 		YTtfHelper.applyFont(context, root, "mainfont.ttf");
 		btn = (ImageView) view.findViewById(R.id.btn);
 		btn.setAdjustViewBounds(true);
-		super.setContentView(view);
-		setCancelable(false);
+
+		alertDialog = new AlertDialog.Builder(context).create();
+		alertDialog.setCancelable(false);
+
 	}
 
 	public LevelResultDialog setScore(int score) {
@@ -67,6 +72,7 @@ public class LevelResultDialog extends Dialog {
 			bonusLayout.setVisibility(View.GONE);
 			btn.setImageResource(R.drawable.level_result_btn_fail);
 			btn.setOnClickListener(new View.OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					newGame();
@@ -84,16 +90,14 @@ public class LevelResultDialog extends Dialog {
 		context.finish();
 	}
 
-	@Override
-	public void setContentView(int layoutResID) {
+	public void show() {
+		alertDialog.show();
+		alertDialog.getWindow().setLayout(DensityUtil.dp2px(context, 350), DensityUtil.dp2px(context, 170));
+		alertDialog.setContentView(view);
 	}
 
-	@Override
-	public void setContentView(View view, LayoutParams params) {
-	}
-
-	@Override
-	public void setContentView(View view) {
+	public void dismiss() {
+		alertDialog.dismiss();
 	}
 
 }

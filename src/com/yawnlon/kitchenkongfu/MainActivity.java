@@ -24,6 +24,8 @@ public class MainActivity extends Activity {
 	private Context context;
 	private YinYangView mYYView;
 
+	private boolean bGameOver;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,27 +54,37 @@ public class MainActivity extends Activity {
 		});
 
 		mYYView = (YinYangView) findViewById(R.id.yin_yang);
+
+		bGameOver = false;
 	}
 
 	public void setTime(int time) {
-		this.time.setText(time + "s");
-		if (time <= 0) {
-			// TODO fail
-			new LevelResultDialog(context).setScore(Integer.parseInt(score.getText().toString()))
-					.setType(LevelResultDialog.FAIL).show();
+		if (!bGameOver) {
+			this.time.setText(time + "s");
+			if (time <= 0) {
+				// fail
+				bGameOver = true;
+				new LevelResultDialog(context).setScore(Integer.parseInt(score.getText().toString()))
+						.setType(LevelResultDialog.FAIL).show();
+			}
 		}
 	}
 
 	public void setScore(int score) {
-		this.score.setText(Integer.toString(score));
+		if (!bGameOver) {
+			this.score.setText(Integer.toString(score));
+		}
 	}
 
 	public void setTargetScore(int score) {
-		this.target.setText(Integer.toString(score));
-		if (mYYView.setScore(score)) {
-			// TODO: 达到目标！
-			new LevelResultDialog(context).setScore(Integer.parseInt(this.score.getText().toString()))
-					.setType(LevelResultDialog.SUCCESS).show();
+		if (!bGameOver) {
+			this.target.setText(Integer.toString(score));
+			if (mYYView.setScore(score)) {
+				// 达到目标！
+				bGameOver = true;
+				new LevelResultDialog(context).setScore(Integer.parseInt(this.score.getText().toString()))
+						.setType(LevelResultDialog.SUCCESS).show();
+			}
 		}
 	}
 
@@ -121,8 +133,14 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
+	}
+	
+	@Override
+	public void finish(){
+		super.finish();
+//		ControlCenter.onDestroy();
+		onDestroy();
 	}
 
 }

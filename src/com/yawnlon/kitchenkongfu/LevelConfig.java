@@ -2,19 +2,10 @@ package com.yawnlon.kitchenkongfu;
 
 public class LevelConfig {
 
+	/**
+	 * 当前关卡
+	 */
 	private static int CURRENT_LEVEL = 0;
-
-	private static final int LEVEL_RES[] = { R.drawable.level1, R.drawable.animal, R.drawable.animal, R.drawable.animal,
-			R.drawable.animal, R.drawable.animal, R.drawable.animal, R.drawable.animal };
-
-	private static final String LEVEL_TARGET[] = { "10000000" };
-	private static final String RANDOM_CONFIG[] = { "4111111" };
-	private static final int LEVEL_TYPE[] = { 0 }; // 0 代表COLD, 1代表HOT
-	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 600 };
-
-	public static int getTotalTargetScore() {
-		return LEVEL_TOTAL_TARGET_SCORE[CURRENT_LEVEL];
-	}
 
 	public static int getCurrentLevel() {
 		return CURRENT_LEVEL + 1;
@@ -24,12 +15,22 @@ public class LevelConfig {
 		CURRENT_LEVEL = current - 1;
 	}
 
+	/**
+	 * Level Config
+	 */
+	private static final int LEVEL_RES[] = { R.drawable.level1, R.drawable.level2, R.drawable.level3, R.drawable.level4,
+			R.drawable.level5, R.drawable.level6, };// 每一关的食物对应的PicId
+	private static final String LEVEL_TARGET[] = { "10000000", "10000000", "11000000", "11000000", "11100000",
+			"11100000" };// 每一关的Pic对应的目标食物，例如level1.png香蕉是目标食物，则为10000000
+	private static final int LEVEL_TARGET_TYPE[] = { 0, 1, 0, 1, 0, 1 }; // 每一关的目标属性,
+																			// 0代表COLD,
+																			// 1代表HOT
+	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 120, 120, 120, 120, 120, 120 };// 每一关的目标分数，达到该分数即可过关
+	private static final int LEVEL_MAX_TIME[] = { 100, 100, 100, 100, 100, 100 };// 每一关的最大时间
+
 	public static boolean isTarget(int picId) {
-		try {
+		if (picId >= 0 && picId < 8)
 			return LEVEL_TARGET[CURRENT_LEVEL].charAt(picId - 1) == '1';
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return false;
 	}
 
@@ -38,9 +39,52 @@ public class LevelConfig {
 	}
 
 	public static boolean isCold() {
-		return LEVEL_TYPE[CURRENT_LEVEL] == 0;
+		return LEVEL_TARGET_TYPE[CURRENT_LEVEL] == 0;
 	}
 
+	public static int getTotalTargetScore() {
+		return LEVEL_TOTAL_TARGET_SCORE[CURRENT_LEVEL];
+	}
+
+	public static int getMaxTime() {
+		return LEVEL_MAX_TIME[CURRENT_LEVEL];
+	}
+
+	/**
+	 * Food Picture Config
+	 */
+	private final static int[] foodsID = { R.drawable.food1, R.drawable.food2, R.drawable.food3, R.drawable.food4,
+			R.drawable.food5, R.drawable.food6, R.drawable.food7, R.drawable.food8, R.drawable.food9 };
+
+	public static int getFood(int id) {
+		return foodsID[id - 1];
+	}
+
+	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "24", "62", "412", "784" }; // 每一关的targetFood，n对应R.drawable.answer_foodn
+
+	public static String getTargetFood() {
+		return LEVEL_TARGET_FOOD[CURRENT_LEVEL];
+	}
+
+	/**
+	 * Tool Config
+	 */
+	public static int[] TOOL_NUM = { 1, 3, 0 };
+	public static int[] TOOL_RESID = { R.drawable.tool_hint, R.drawable.tool_addtime, R.drawable.tool_spoon };
+	public final static int TOOL_HINT = 0;
+	public final static int TOOL_ADDTIME = 1;
+	public final static int TOOL_SPOON = 2;
+
+	/**
+	 * Random Config
+	 */
+	private static final String RANDOM_CONFIG[] = { "4111111", "4111111", "4111111", "4111111", "4111111", "4111111" };// 每一关的食物比例
+
+	/**
+	 * 根据RANDOM_CONFIG中的概率得到随机数
+	 * 
+	 * @return 得到的随机数
+	 */
 	public static int getConfigRandom() {
 		char[] rConfig = RANDOM_CONFIG[CURRENT_LEVEL].toCharArray();
 		int sum = 0;
@@ -57,31 +101,5 @@ public class LevelConfig {
 		}
 		return 0;
 	}
-
-	/**
-	 * Food Config
-	 */
-	private final static int[] foodsID = { R.drawable.answer_food1, R.drawable.answer_food2, R.drawable.answer_food3,
-			R.drawable.answer_food4, R.drawable.answer_food5, R.drawable.answer_food6, R.drawable.answer_food7,
-			R.drawable.answer_food8, R.drawable.answer_food9 };
-
-	public static int getFood(int id) {
-		return foodsID[id - 1];
-	}
-
-	private static String[] TARGET_FOOD = { "123" };
-
-	public static String getTargetFood() {
-		return TARGET_FOOD[CURRENT_LEVEL];
-	}
-
-	/**
-	 * Tool Config
-	 */
-	public static int[] TOOL_NUM = { 1, 3, 0 };
-	public static int[] TOOL_RESID = { R.drawable.tool_hint, R.drawable.tool_addtime, R.drawable.tool_spoon };
-	public final static int TOOL_HINT = 0;
-	public final static int TOOL_ADDTIME = 1;
-	public final static int TOOL_SPOON = 2;
 
 }

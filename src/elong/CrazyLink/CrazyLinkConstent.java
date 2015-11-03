@@ -36,7 +36,7 @@ public class CrazyLinkConstent {
 	public static int LIFE_UP = 9;			//�������ڸ�ֵʱ��������ֵ
 	public static int LIFE_TIMEOUT = 10;	//��������������ֵʱʧȥһ������
 	
-	public static int MAX_TIME = 10;		//һ����Ϸ��ʱ�䣬����
+	public static int MAX_TIME = 100;		//һ����Ϸ��ʱ�䣬����
 
 	
 	public enum E_SOUND
