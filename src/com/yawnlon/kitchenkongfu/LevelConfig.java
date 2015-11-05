@@ -26,7 +26,7 @@ public class LevelConfig {
 																			// 0代表COLD,
 																			// 1代表HOT
 	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 120, 120, 120, 120, 120, 120 };// 每一关的目标分数，达到该分数即可过关
-	private static final int LEVEL_MAX_TIME[] = { 100, 100, 100, 100, 100, 100 };// 每一关的最大时间
+	private static final int LEVEL_MAX_TIME[] = { 5, 5, 5, 100, 100, 100 };// 每一关的最大时间
 
 	public static boolean isTarget(int picId) {
 		if (picId >= 0 && picId < 8)
@@ -68,7 +68,7 @@ public class LevelConfig {
 	// = -> 13
 	// > -> 14
 	// ? -> 15
-	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "2;", "6=", "<9:", "652" };
+	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "2;", "=>", "<9:", "652" };
 
 	public static String getTargetFood() {
 		return LEVEL_TARGET_FOOD[CURRENT_LEVEL];

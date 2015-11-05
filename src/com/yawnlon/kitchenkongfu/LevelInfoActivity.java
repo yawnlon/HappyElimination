@@ -35,6 +35,7 @@ public class LevelInfoActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(LevelInfoActivity.this, MainActivity.class);
 				startActivity(intent);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				finish();
 			}
 		});

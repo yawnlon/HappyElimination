@@ -121,7 +121,7 @@ public class ControlCenter {
 	public static boolean mIsLoading; // 显示正在加载
 	public static boolean mIsAutoTip; // 处于自动提示状态
 
-	ArrayList<IControl> mControlList = new ArrayList<IControl>(); // 渲染类的控制列表
+	ArrayList<IControl> mControlList; // 渲染类的控制列表
 
 	static final int EFT_NONE = 0; // 空白
 	static final int EFT_NORMAL = 1; // 正常，无特殊效果
@@ -150,6 +150,7 @@ public class ControlCenter {
 		mIsAutoTip = false;
 		mDrawExchangeList = new ArrayList<DrawExchange>();
 		mDrawDisappearList = new ArrayList<DrawDisappear>();
+		mControlList = new ArrayList<IControl>();
 		mAutoTipTimer = 0;
 		init();
 	}

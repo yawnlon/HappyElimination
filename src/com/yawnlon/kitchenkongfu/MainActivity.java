@@ -135,12 +135,13 @@ public class MainActivity extends Activity {
 	public void onDestroy() {
 		super.onDestroy();
 	}
-	
+
 	@Override
-	public void finish(){
+	public void finish() {
 		super.finish();
-//		ControlCenter.onDestroy();
+		// ControlCenter.onDestroy();
 		onDestroy();
+//		System.gc();
 	}
 
 }

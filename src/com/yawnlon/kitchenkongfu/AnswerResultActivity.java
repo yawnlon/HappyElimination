@@ -27,6 +27,7 @@ public class AnswerResultActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(AnswerResultActivity.this, LevelInfoActivity.class);
 				startActivity(intent);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				finish();
 			}
 		});
