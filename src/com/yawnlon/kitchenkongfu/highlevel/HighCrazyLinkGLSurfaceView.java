@@ -1,55 +1,46 @@
+package com.yawnlon.kitchenkongfu.highlevel;
 
-package elong.CrazyLink;
-
-import elong.CrazyLink.CrazyLinkConstent.E_SCENARIO;
-import elong.CrazyLink.Core.ControlCenter;
-import elong.CrazyLink.Interaction.ScreenTouch;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Message;
-import android.preference.PreferenceManager.OnActivityDestroyListener;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import elong.CrazyLink.CrazyLinkConstent;
+import elong.CrazyLink.CrazyLinkGLSurfaceView;
+import elong.CrazyLink.CrazyLinkConstent.E_SCENARIO;
+import elong.CrazyLink.Interaction.ScreenTouch;
 
-public class CrazyLinkGLSurfaceView extends GLSurfaceView {
+public class HighCrazyLinkGLSurfaceView extends CrazyLinkGLSurfaceView {
 
-	private SceneRenderer mRenderer;
-	protected Context mContext;
+	SceneRenderer mRenderer;
+	HighControlCenter mControlCenter;
 
-	protected boolean m_bThreadRun = false;
-
-	ControlCenter controlCenter;
-
-	protected ScreenTouch screenTouch;
-
-	public CrazyLinkGLSurfaceView(Context context) {
+	public HighCrazyLinkGLSurfaceView(Context context) {
 		super(context);
-		init(context);
 	}
-	
+
+	@Override
 	protected void init(Context context) {
 		mContext = this.getContext();
 		mRenderer = new SceneRenderer();
 		setZOrderOnTop(true);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-		// mGameSurfaceView.requestFocus();
-		// mGameSurfaceView.setFocusableInTouchMode(true);
 		setRenderer(mRenderer);
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
 		if (!m_bThreadRun) {
 			m_bThreadRun = true;
-			controlCenter = new ControlCenter(mContext);
-			// ctlExchange = new CtlExchange(col1, row1, col2, row2);
+			mControlCenter = new HighControlCenter(mContext);
 			new Thread() {
 				public void run() {
 					while (true) {
 						try {
-							controlCenter.run();
+							mControlCenter.run();
 							Thread.sleep(CrazyLinkConstent.DELAY_MS);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -60,22 +51,17 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 		}
 	}
 
-	public CrazyLinkGLSurfaceView(Context context, AttributeSet attributeSet) {
-		// TODO Auto-generated constructor stub
+	public HighCrazyLinkGLSurfaceView(Context context, AttributeSet attributeSet) {
 		this(context);
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
 		if (screenTouch != null) {
-			if (ControlCenter.mScene == E_SCENARIO.GAME) {
+			if (HighControlCenter.mScene == E_SCENARIO.GAME) {
 				screenTouch.touchGameView(e);
 			}
-			// else if (ControlCenter.mScene == E_SCENARIO.MENU) {
-			// screenTouch.touchMenuView(e);
-			// } else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
-			// screenTouch.touchResultView(e);
-			// }
 		}
 		return true;
 	}
@@ -89,15 +75,11 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 			gl.glLoadIdentity();
 			gl.glTranslatef(0f, 0f, -10f);
 
-			if (ControlCenter.mScene == E_SCENARIO.GAME) {
-				controlCenter.drawGameScene(gl);
-			} else if (ControlCenter.mScene == E_SCENARIO.MENU) {
-				// controlCenter.drawMenuScene(gl);
+			if (HighControlCenter.mScene == E_SCENARIO.GAME) {
+				mControlCenter.drawGameScene(gl);
+			} else if (HighControlCenter.mScene == E_SCENARIO.MENU) {
 				screenTouch.raiseTouchMenuViewEvent();
 			}
-			// else if (ControlCenter.mScene == E_SCENARIO.RESULT) {
-			// controlCenter.drawResultScene(gl);
-			// }
 
 		}
 
@@ -131,16 +113,14 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 			gl.glEnable(GL10.GL_ALPHA_TEST);
 			gl.glAlphaFunc(GL10.GL_GREATER, 0.1f);
 
-			controlCenter.initTexture(gl);
-			controlCenter.initDraw(gl);
-			if (ControlCenter.mScene == E_SCENARIO.GAME) {
+			mControlCenter.initTexture(gl);
+			mControlCenter.initDraw(gl);
+			if (HighControlCenter.mScene == E_SCENARIO.GAME) {
 				Message msg = new Message();
-				msg.what = ControlCenter.LOADING_START;
-				ControlCenter.mHandler.sendMessage(msg);
+				msg.what = HighControlCenter.LOADING_START;
+				HighControlCenter.mHandler.sendMessage(msg);
 			}
 
 		}
-
 	}
-
 }

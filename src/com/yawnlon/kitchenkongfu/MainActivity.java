@@ -18,17 +18,23 @@ import yawnlon.android.widget.YTtfHelper;
 
 public class MainActivity extends Activity {
 
-	private CrazyLinkGLSurfaceView mGLSurfaceView;
-	private YTtfTextView time, score, target;
-	private Button pause;
-	private Context context;
+	protected CrazyLinkGLSurfaceView mGLSurfaceView;
+	protected YTtfTextView time;
+	protected YTtfTextView score;
+	protected YTtfTextView target;
+	protected Button pause;
+	protected Context context;
 	private YinYangView mYYView;
 
-	private boolean bGameOver;
+	protected boolean bGameOver;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		init();
+	}
+	
+	protected void init() {
 		setContentView(R.layout.main);
 		context = this;
 		mGLSurfaceView = (CrazyLinkGLSurfaceView) findViewById(R.id.game);
@@ -141,7 +147,10 @@ public class MainActivity extends Activity {
 		super.finish();
 		// ControlCenter.onDestroy();
 		onDestroy();
-//		System.gc();
+		// System.gc();
+	}
+
+	public void setMarkNum(int num) {
 	}
 
 }

@@ -59,15 +59,17 @@ import elong.CrazyLink.Interface.IControl;
 
 public class ControlCenter {
 
-	static Context mContext;
+	protected static Context mContext;
 	public static E_SCENARIO mScene;
 
 	static ActionTokenPool mToken; // 操作令牌，只有获取到令牌才能操作
 
-	static int mAnimalPic[][]; // 对应格子显示的图片，调用DrawAnimal渲染
-	static int mPicBak[][]; // mPic的副本，用于autotip计算
-	static int mEffect[][]; // 0：不显示；1：显示动物；2:显示交换特效；3:跌落特效；4:消除特效
-	static int mDisappearToken[][]; // 消除特效获取的TOKEN
+	protected static int mAnimalPic[][]; // 对应格子显示的图片，调用DrawAnimal渲染
+	protected static int mPicBak[][]; // mPic的副本，用于autotip计算
+	protected static int mEffect[][]; // 0：不显示；1：显示动物；2:显示交换特效；3:跌落特效；4:消除特效
+	protected static int mDisappearToken[][]; // 消除特效获取的TOKEN
+	
+	protected static int mMarkNum;
 
 	static int mSingleScoreW = 0; // 显示当次奖励的位置
 	static int mSingleScoreH = 0;
@@ -152,20 +154,8 @@ public class ControlCenter {
 		mDrawDisappearList = new ArrayList<DrawDisappear>();
 		mControlList = new ArrayList<IControl>();
 		mAutoTipTimer = 0;
+		mMarkNum = 0;
 		init();
-	}
-
-	public static void onDestroy() {
-		mScene = null;
-		mScore = null;
-		mTargetScore = null;
-		mSound = null;
-		mTimer = null;
-		mAnimalPic = null;
-		mPicBak = null;
-		mEffect = null;
-		mDisappearToken = null;
-		mToken = null;
 	}
 
 	// 初始化逻辑，保证初始化以后的状态没有处于消除状态的
@@ -186,7 +176,7 @@ public class ControlCenter {
 	public static void refresh() {
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
-				ControlCenter.mAnimalPic[i][j] = 0;
+				mAnimalPic[i][j] = 0;
 			}
 		}
 		markFill();
@@ -453,7 +443,7 @@ public class ControlCenter {
 	}
 
 	// 注册渲染类的控制对象到控制中心的控制列表
-	void controlRegister(IControl control) {
+	protected void controlRegister(IControl control) {
 		if (control != null)
 			mControlList.add(control);
 	}
@@ -837,7 +827,7 @@ public class ControlCenter {
 	}
 
 	// 初始化纹理的方法
-	private int initTexture(GL10 gl, int drawableId) {
+	protected int initTexture(GL10 gl, int drawableId) {
 		int[] textures = new int[1];
 		gl.glGenTextures(1, textures, 0);
 		int currTextureId = textures[0];
@@ -1027,6 +1017,7 @@ public class ControlCenter {
 				((MainActivity) mContext).setScore(mScore.getScore());
 				((MainActivity) mContext).setTargetScore(mTargetScore.getScore());
 				((MainActivity) mContext).setTime(mTimer.getLeftTime());
+				((MainActivity) mContext).setMarkNum(getMarkNum());
 			}
 			}
 		}
@@ -1065,14 +1056,13 @@ public class ControlCenter {
 			drawLoading.draw(gl);
 			return;
 		}
-		// drawScore.draw(gl, mScore.getScore(), 0);
-		// drawLife.draw(gl, mScore.mLife);
+		drawGame(gl);
+	}
+	
+	protected void drawGame(GL10 gl) {
 		drawSingleScore.draw(gl, mSingleScoreW, mSingleScoreH, mScore.getAward());
 		drawTip1.draw(gl);
 		drawTip2.draw(gl);
-		// drawLifeAdd.draw(gl);
-		// drawLifeDel.draw(gl);
-		// drawTimeBar.draw(gl, mTimer.getLeftTime());
 		mHandler.sendEmptyMessage(REFRESH_UI);
 
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
@@ -1109,7 +1099,9 @@ public class ControlCenter {
 			}
 		}
 		drawGrid.draw(gl);
-
 	}
 
+	private static int getMarkNum() {
+		return mMarkNum;
+	}
 }
