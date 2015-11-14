@@ -10,13 +10,8 @@ import elong.CrazyLink.Core.ControlCenter;
 
 public class HighControlCenter extends ControlCenter {
 
-	private final static int MARK_EFFECT_NORMAL = 0;
-	private final static int MARK_EFFECT_IOF = 1;
-
 	int markEffectTextureId;
 	static public DrawMarkEffect drawMarkEffect;
-
-	private static int mMarkEffect[][];
 
 	public HighControlCenter(Context context) {
 		super(context);
@@ -38,6 +33,8 @@ public class HighControlCenter extends ControlCenter {
 			mMarkNum++;
 		}
 	}
+	
+	
 
 	@Override
 	public void initTexture(GL10 gl) {

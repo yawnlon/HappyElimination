@@ -51,11 +51,13 @@ public class HighMainActivity extends MainActivity {
 
 	@Override
 	public void setMarkNum(int num) {
-		if (num == 0) {
-			// 达到目标！
-			bGameOver = true;
-			new LevelResultDialog(context).setScore(Integer.parseInt(this.score.getText().toString()))
-					.setType(LevelResultDialog.SUCCESS).show();
+		if (!bGameOver) {
+			if (num == 0) {
+				// 达到目标！
+				bGameOver = true;
+				new LevelResultDialog(context).setScore(Integer.parseInt(this.score.getText().toString()))
+						.setType(LevelResultDialog.SUCCESS).show();
+			}
 		}
 	}
 }

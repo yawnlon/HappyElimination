@@ -68,8 +68,11 @@ public class ControlCenter {
 	protected static int mPicBak[][]; // mPic的副本，用于autotip计算
 	protected static int mEffect[][]; // 0：不显示；1：显示动物；2:显示交换特效；3:跌落特效；4:消除特效
 	protected static int mDisappearToken[][]; // 消除特效获取的TOKEN
-	
+
 	protected static int mMarkNum;
+	protected static int mMarkEffect[][];
+	protected final static int MARK_EFFECT_NORMAL = 0;
+	protected final static int MARK_EFFECT_IOF = 1;
 
 	static int mSingleScoreW = 0; // 显示当次奖励的位置
 	static int mSingleScoreH = 0;
@@ -321,6 +324,12 @@ public class ControlCenter {
 				if (EFT_DISAPPEAR == mEffect[i][j] && (token == mDisappearToken[i][j])) {
 					if (LevelConfig.isTarget(mAnimalPic[i][j])) {
 						clearCount += 100;
+						if (mMarkEffect != null) {
+							if (mMarkEffect[i][j] != MARK_EFFECT_NORMAL) {
+								mMarkNum--;
+								mMarkEffect[i][j] = MARK_EFFECT_NORMAL;
+							}
+						}
 					}
 					mAnimalPic[i][j] = 0;
 					mEffect[i][j] = EFT_NORMAL;
@@ -1058,7 +1067,7 @@ public class ControlCenter {
 		}
 		drawGame(gl);
 	}
-	
+
 	protected void drawGame(GL10 gl) {
 		drawSingleScore.draw(gl, mSingleScoreW, mSingleScoreH, mScore.getAward());
 		drawTip1.draw(gl);
