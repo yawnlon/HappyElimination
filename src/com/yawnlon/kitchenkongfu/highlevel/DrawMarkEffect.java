@@ -6,7 +6,6 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import elong.CrazyLink.CrazyLinkConstent;
-import elong.CrazyLink.Control.CtlAutoTip;
 import elong.CrazyLink.Interface.IControl;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -23,7 +22,7 @@ public class DrawMarkEffect {
 
 	public DrawMarkEffect(int textureId) {
 		this.textureId = textureId;
-		control = new CtlAutoTip();
+		control = new CtlMarkEffect();
 	}
 
 	// 顶点坐标数据的初始化
@@ -71,7 +70,7 @@ public class DrawMarkEffect {
 	public void draw(GL10 gl, int col, int row) {
 		if (!control.isRun())
 			return;
-		CtlAutoTip ctl = (CtlAutoTip) control;
+		CtlMarkEffect ctl = (CtlMarkEffect) control;
 		int witch = ctl.getPicId();
 		initVertexBuffer(col, row); // 根据col,row初始化顶点坐标
 		initTextureBuffer(witch); // 根据witch来初始化纹理顶点数据
@@ -101,5 +100,9 @@ public class DrawMarkEffect {
 		// 绘制图形
 		gl.glDrawArrays(GL10.GL_TRIANGLES, 0, vCount);
 		gl.glDisable(GL10.GL_TEXTURE_2D);// 关闭纹理
+//		gl.glEnable(GL10.GL_BLEND);
+//		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+//		gl.glColor4f(1, 1, 1, (float) 0.5);
+//		gl.glTranslatef(0.0f, 0.0f, 0.5f);
 	}
 }

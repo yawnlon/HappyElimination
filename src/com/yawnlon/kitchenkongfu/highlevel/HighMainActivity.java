@@ -60,4 +60,8 @@ public class HighMainActivity extends MainActivity {
 			}
 		}
 	}
+
+	public boolean useSpoonTool() {
+		return HighControlCenter.useSpoonTool();
+	}
 }

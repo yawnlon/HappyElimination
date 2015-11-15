@@ -16,6 +16,7 @@ public class HighControlCenter extends ControlCenter {
 	public HighControlCenter(Context context) {
 		super(context);
 		mMarkEffect = new int[(int) CrazyLinkConstent.GRID_NUM][(int) CrazyLinkConstent.GRID_NUM];
+		mMarkPos = null;
 		initMarkEffect();
 	}
 
@@ -25,16 +26,14 @@ public class HighControlCenter extends ControlCenter {
 				mMarkEffect[i][j] = MARK_EFFECT_NORMAL;
 			}
 		}
-		String markPos = HighLevelConfig.getMarkPos();
-		for (int i = 0; i < markPos.length(); i = i + 2) {
-			int x = markPos.charAt(i) - '0';
-			int y = markPos.charAt(i + 1) - '0';
+		mMarkPos = HighLevelConfig.getMarkPos();
+		for (int i = 0; i < mMarkPos.length(); i = i + 2) {
+			int x = mMarkPos.charAt(i) - '0';
+			int y = mMarkPos.charAt(i + 1) - '0';
 			mMarkEffect[x][y] = MARK_EFFECT_IOF;
 			mMarkNum++;
 		}
 	}
-	
-	
 
 	@Override
 	public void initTexture(GL10 gl) {
@@ -69,5 +68,17 @@ public class HighControlCenter extends ControlCenter {
 			}
 		}
 		drawGame(gl);
+	}
+
+	public static boolean useSpoonTool() {
+		if (mMarkNum == 0) {
+			return false;
+		}
+		int r = (int) (Math.random() * 100) % mMarkNum;
+		mMarkEffect[(mMarkPos.charAt(r * 2) - '0')][(mMarkPos.charAt(r * 2 + 1) - '0')] = MARK_EFFECT_NORMAL;
+		String temp = mMarkPos.substring(0, r * 2) + mMarkPos.substring(r * 2 + 2);
+		mMarkPos = temp;
+		mMarkNum--;
+		return true;
 	}
 }

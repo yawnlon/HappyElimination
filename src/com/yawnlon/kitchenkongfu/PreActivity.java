@@ -9,9 +9,9 @@ import android.widget.ImageView;
 
 public class PreActivity extends Activity {
 
-	private int currentPage;
-	private final static String CURRENT_PAGE = "current_page";
-	private ImageView dialog, next;
+	protected int currentPage;
+	public final static String CURRENT_PAGE = "current_page";
+	protected ImageView dialog, next;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -21,6 +21,10 @@ public class PreActivity extends Activity {
 		currentPage = getIntent().getIntExtra(CURRENT_PAGE, 1);
 		dialog.setImageResource(getDialogId());
 		dialog.setAdjustViewBounds(true);
+		init();
+	}
+	
+	protected void init() {
 		next.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -38,7 +42,7 @@ public class PreActivity extends Activity {
 		});
 	}
 
-	private int getDialogId() {
+	protected int getDialogId() {
 		int result;
 		switch (currentPage) {
 		case 1:

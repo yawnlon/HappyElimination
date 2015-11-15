@@ -26,4 +26,8 @@ public class HintToolView extends LinearLayout {
 			addView(taget);
 		}
 	}
+
+	public int getHintNum() {
+		return LevelConfig.getTargetFood().length();
+	}
 }

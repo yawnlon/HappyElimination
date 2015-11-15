@@ -71,6 +71,7 @@ public class ControlCenter {
 
 	protected static int mMarkNum;
 	protected static int mMarkEffect[][];
+	protected static String mMarkPos;
 	protected final static int MARK_EFFECT_NORMAL = 0;
 	protected final static int MARK_EFFECT_IOF = 1;
 
@@ -326,6 +327,14 @@ public class ControlCenter {
 						clearCount += 100;
 						if (mMarkEffect != null) {
 							if (mMarkEffect[i][j] != MARK_EFFECT_NORMAL) {
+								for (int k = 0; k < mMarkPos.length(); k = k + 2) {
+									int x = mMarkPos.charAt(k) - '0';
+									int y = mMarkPos.charAt(k + 1) - '0';
+									if (x == i && y == j) {
+										String temp = mMarkPos.substring(0, k) + mMarkPos.substring(k + 2);
+										mMarkPos = temp;
+									}
+								}
 								mMarkNum--;
 								mMarkEffect[i][j] = MARK_EFFECT_NORMAL;
 							}

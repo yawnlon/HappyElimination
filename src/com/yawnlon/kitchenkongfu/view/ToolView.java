@@ -3,10 +3,11 @@ package com.yawnlon.kitchenkongfu.view;
 import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.MainActivity;
 import com.yawnlon.kitchenkongfu.R;
+import com.yawnlon.kitchenkongfu.highlevel.HighMainActivity;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.PaintDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -64,12 +65,12 @@ public class ToolView extends FrameLayout {
 		tool.setImageResource(LevelConfig.TOOL_RESID[type]);
 		tool.setAdjustViewBounds(true);
 		if (type == LevelConfig.TOOL_HINT) {
-			hintView.setBackgroundColor(Color.WHITE);
-			popupWindow = new PopupWindow(hintView, 300, 100);
+			hintView.setBackgroundResource(R.drawable.hint_tool_back);
+			popupWindow = new PopupWindow(hintView, 100 * hintView.getHintNum(), 100);
 			popupWindow.setFocusable(true);
 			popupWindow.setAnimationStyle(R.style.HintAnimationPreview);
 			popupWindow.setOutsideTouchable(true);
-			popupWindow.setBackgroundDrawable(new PaintDrawable());
+			popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		}
 	}
 
@@ -94,13 +95,17 @@ public class ToolView extends FrameLayout {
 					int[] location = new int[2];
 					v.getLocationOnScreen(location);
 					popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - 50,
-							location[1] - popupWindow.getHeight());					
+							location[1] - popupWindow.getHeight());
 					break;
 				case LevelConfig.TOOL_ADDTIME:
 					((MainActivity) context).addTime(5);
 					break;
 				case LevelConfig.TOOL_SPOON:
-					Toast.makeText(context, "NOT DEVELOPED!", Toast.LENGTH_SHORT).show();
+					if (!(v.getContext() instanceof HighMainActivity))
+						Toast.makeText(context, "NOT DEVELOPED!", Toast.LENGTH_SHORT).show();
+					else {
+						((HighMainActivity) v.getContext()).useSpoonTool();
+					}
 					break;
 				default:
 					Toast.makeText(context, "INVALID TOOL TYPE!", Toast.LENGTH_SHORT).show();

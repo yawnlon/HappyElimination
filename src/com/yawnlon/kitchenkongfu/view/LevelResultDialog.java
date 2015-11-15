@@ -3,6 +3,9 @@ package com.yawnlon.kitchenkongfu.view;
 import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.LevelInfoActivity;
 import com.yawnlon.kitchenkongfu.R;
+import com.yawnlon.kitchenkongfu.highlevel.HighLevelInfoActivity;
+import com.yawnlon.kitchenkongfu.highlevel.HighPreActivity;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -84,7 +87,12 @@ public class LevelResultDialog {
 
 	private void newGame() {
 		Intent intent = new Intent();
-		intent.setClass(context, LevelInfoActivity.class);
+		if (LevelConfig.getCurrentLevel() <= 6)
+			intent.setClass(context, LevelInfoActivity.class);
+		else if (LevelConfig.getCurrentLevel() == 7)
+			intent.setClass(context, HighPreActivity.class);
+		else
+			intent.setClass(context, HighLevelInfoActivity.class);
 		context.startActivity(intent);
 		context.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 		context.finish();
