@@ -21,7 +21,7 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 
 	protected boolean m_bThreadRun = false;
 
-	ControlCenter controlCenter;
+	protected ControlCenter controlCenter;
 
 	protected ScreenTouch screenTouch;
 
@@ -29,7 +29,7 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 		super(context);
 		init(context);
 	}
-	
+
 	protected void init(Context context) {
 		mContext = this.getContext();
 		mRenderer = new SceneRenderer();
@@ -47,7 +47,7 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 			// ctlExchange = new CtlExchange(col1, row1, col2, row2);
 			new Thread() {
 				public void run() {
-					while (true) {
+					while (m_bThreadRun) {
 						try {
 							controlCenter.run();
 							Thread.sleep(CrazyLinkConstent.DELAY_MS);
@@ -60,9 +60,15 @@ public class CrazyLinkGLSurfaceView extends GLSurfaceView {
 		}
 	}
 
+	public void onDestroy() {
+		m_bThreadRun = false;
+		controlCenter.onDestroy();
+	}
+
 	public CrazyLinkGLSurfaceView(Context context, AttributeSet attributeSet) {
 		// TODO Auto-generated constructor stub
-		this(context);
+		super(context, attributeSet);
+		init(context);
 	}
 
 	@Override

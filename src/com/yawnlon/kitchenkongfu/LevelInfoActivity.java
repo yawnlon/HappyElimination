@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import yawnlon.android.widget.YTtfHelper;
@@ -15,19 +16,22 @@ import yawnlon.android.widget.YTtfHelper;
 public class LevelInfoActivity extends Activity {
 
 	private TextView target, goal;
+	private ImageView yinYang;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.level_info);
-		findViewById(R.id.have_fun).setVisibility(LevelConfig.getCurrentLevel() == 1 ? View.VISIBLE : View.GONE);
+		findViewById(R.id.have_fun).setVisibility(LevelConfig.getCurrentLevel() == 1 ? View.VISIBLE : View.INVISIBLE);
 		((TextView) findViewById(R.id.level)).setText(String.format("LEVEL %d", LevelConfig.getCurrentLevel()));
 
 		target = (TextView) findViewById(R.id.target);
 		goal = (TextView) findViewById(R.id.goal);
+		yinYang = (ImageView) findViewById(R.id.yin_yang);
 
 		target.setText(LevelConfig.isCold() ? "COLD" : "HOT");
 		target.setTextColor(LevelConfig.isCold() ? Color.rgb(83, 187, 222) : Color.rgb(255, 0, 0));
 		goal.setText(LevelConfig.isCold() ? "\"Yin\"" : "\"Yang\"");
+		yinYang.setImageResource(LevelConfig.isCold() ? R.drawable.level_info_cold : R.drawable.level_info_hot);
 
 		findViewById(R.id.go).setOnClickListener(new OnClickListener() {
 			@Override

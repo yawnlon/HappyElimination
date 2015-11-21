@@ -17,10 +17,13 @@ import elong.CrazyLink.Interaction.ScreenTouch;
 public class HighCrazyLinkGLSurfaceView extends CrazyLinkGLSurfaceView {
 
 	SceneRenderer mRenderer;
-	HighControlCenter mControlCenter;
 
 	public HighCrazyLinkGLSurfaceView(Context context) {
 		super(context);
+	}
+	
+	public HighCrazyLinkGLSurfaceView(Context context, AttributeSet attributeSet) {
+		super(context, attributeSet);
 	}
 
 	@Override
@@ -35,12 +38,12 @@ public class HighCrazyLinkGLSurfaceView extends CrazyLinkGLSurfaceView {
 
 		if (!m_bThreadRun) {
 			m_bThreadRun = true;
-			mControlCenter = new HighControlCenter(mContext);
+			controlCenter = new HighControlCenter(mContext);
 			new Thread() {
 				public void run() {
-					while (true) {
+					while (m_bThreadRun) {
 						try {
-							mControlCenter.run();
+							controlCenter.run();
 							Thread.sleep(CrazyLinkConstent.DELAY_MS);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -49,10 +52,6 @@ public class HighCrazyLinkGLSurfaceView extends CrazyLinkGLSurfaceView {
 				}
 			}.start();
 		}
-	}
-
-	public HighCrazyLinkGLSurfaceView(Context context, AttributeSet attributeSet) {
-		this(context);
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -76,7 +75,7 @@ public class HighCrazyLinkGLSurfaceView extends CrazyLinkGLSurfaceView {
 			gl.glTranslatef(0f, 0f, -10f);
 
 			if (HighControlCenter.mScene == E_SCENARIO.GAME) {
-				mControlCenter.drawGameScene(gl);
+				controlCenter.drawGameScene(gl);
 			} else if (HighControlCenter.mScene == E_SCENARIO.MENU) {
 				screenTouch.raiseTouchMenuViewEvent();
 			}
@@ -113,8 +112,8 @@ public class HighCrazyLinkGLSurfaceView extends CrazyLinkGLSurfaceView {
 			gl.glEnable(GL10.GL_ALPHA_TEST);
 			gl.glAlphaFunc(GL10.GL_GREATER, 0.1f);
 
-			mControlCenter.initTexture(gl);
-			mControlCenter.initDraw(gl);
+			controlCenter.initTexture(gl);
+			controlCenter.initDraw(gl);
 			if (HighControlCenter.mScene == E_SCENARIO.GAME) {
 				Message msg = new Message();
 				msg.what = HighControlCenter.LOADING_START;

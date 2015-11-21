@@ -7,6 +7,7 @@ import com.yawnlon.kitchenkongfu.R;
 import android.content.Context;
 import elong.CrazyLink.CrazyLinkConstent;
 import elong.CrazyLink.Core.ControlCenter;
+import elong.CrazyLink.CrazyLinkConstent.E_SOUND;
 
 public class HighControlCenter extends ControlCenter {
 
@@ -79,6 +80,8 @@ public class HighControlCenter extends ControlCenter {
 		String temp = mMarkPos.substring(0, r * 2) + mMarkPos.substring(r * 2 + 2);
 		mMarkPos = temp;
 		mMarkNum--;
+		// TODO: 添加冰碎/火灭音效
+		mSound.play(HighLevelConfig.isIce() ? E_SOUND.BREAK_ICE : E_SOUND.BREAK_FIRE);
 		return true;
 	}
 }

@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.renderscript.Type;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -26,7 +27,7 @@ public class LevelResultDialog {
 	public final static int FAIL = 1;
 
 	private TextView score;
-	private LinearLayout bonusLayout;
+	private LinearLayout bonusLayout, targetlayout;
 	private ImageView bonus;
 	private FrameLayout root;
 	private ImageView btn;
@@ -41,6 +42,7 @@ public class LevelResultDialog {
 		view = LayoutInflater.from(context).inflate(R.layout.level_result, null);
 		score = (TextView) view.findViewById(R.id.score);
 		bonusLayout = (LinearLayout) view.findViewById(R.id.bonus_layout);
+		targetlayout = (LinearLayout) view.findViewById(R.id.target_layout);
 		bonus = (ImageView) view.findViewById(R.id.bonus);
 		bonus.setAdjustViewBounds(true);
 		root = (FrameLayout) view.findViewById(R.id.back);
@@ -62,15 +64,18 @@ public class LevelResultDialog {
 		if (type == SUCCESS) {
 			root.setBackgroundResource(R.drawable.level_result_back_suc);
 			bonusLayout.setVisibility(View.VISIBLE);
+			targetlayout.setVisibility(View.GONE);
 			btn.setImageResource(R.drawable.level_result_btn_suc);
 			btn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					LevelConfig.setCurrentLevel(LevelConfig.getCurrentLevel() + 1);
-					newGame();
+					newGame(true);
 				}
 			});
 		} else {
+			targetlayout.setVisibility(View.VISIBLE);
+			targetlayout.addView(new HintToolView(context));
 			root.setBackgroundResource(R.drawable.level_result_back_fail);
 			bonusLayout.setVisibility(View.GONE);
 			btn.setImageResource(R.drawable.level_result_btn_fail);
@@ -78,18 +83,18 @@ public class LevelResultDialog {
 
 				@Override
 				public void onClick(View v) {
-					newGame();
+					newGame(false);
 				}
 			});
 		}
 		return this;
 	}
 
-	private void newGame() {
+	private void newGame(boolean success) {
 		Intent intent = new Intent();
 		if (LevelConfig.getCurrentLevel() <= 6)
 			intent.setClass(context, LevelInfoActivity.class);
-		else if (LevelConfig.getCurrentLevel() == 7)
+		else if (LevelConfig.getCurrentLevel() == 7 && success)
 			intent.setClass(context, HighPreActivity.class);
 		else
 			intent.setClass(context, HighLevelInfoActivity.class);

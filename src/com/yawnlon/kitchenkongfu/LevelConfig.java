@@ -5,7 +5,7 @@ public class LevelConfig {
 	/**
 	 * 当前关卡
 	 */
-	protected static int CURRENT_LEVEL = 6;
+	protected static int CURRENT_LEVEL = 0;
 
 	public static int getCurrentLevel() {
 		return CURRENT_LEVEL + 1;
@@ -19,15 +19,15 @@ public class LevelConfig {
 	 * Level Config
 	 */
 	private static final int LEVEL_RES[] = { R.drawable.level1, R.drawable.level2, R.drawable.level3, R.drawable.level4,
-			R.drawable.level5, R.drawable.level6, R.drawable.level1, R.drawable.level1, R.drawable.level1,
-			R.drawable.level1 };// 每一关的食物对应的PicId
-	private static final String LEVEL_TARGET[] = { "10000000", "10000000", "11000000", "11000000", "11100000",
-			"11100000", "10000000", "10000000", "10000000", "10000000" };// 每一关的Pic对应的目标食物，例如level1.png香蕉是目标食物，则为10000000
+			R.drawable.level5, R.drawable.level6, R.drawable.level4, R.drawable.level3, R.drawable.level4,
+			R.drawable.level3 };// 每一关的食物对应的PicId
+	private static final String LEVEL_TARGET[] = { "10000000", "10000000", "11000000", "11000000", "11000000",
+			"11000000", "11000000", "1100000", "1100000", "1100000" };// 每一关的Pic对应的目标食物，例如level1.png香蕉是目标食物，则为10000000
 	private static final int LEVEL_TARGET_TYPE[] = { 0, 1, 0, 1, 0, 1 }; // 每一关的目标属性,
 																			// 0代表COLD,
 																			// 1代表HOT
-	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 120, 120, 120, 120, 120, 120 };// 每一关的目标分数，达到该分数即可过关
-	private static final int LEVEL_MAX_TIME[] = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };// 每一关的最大时间
+	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 420, 600, 720, 660, 660, 780 };// 每一关的目标分数，达到该分数即可过关
+	private static final int LEVEL_MAX_TIME[] = { 50, 50, 60, 60, 60, 60, 10, 80, 80, 80 };// 每一关的最大时间
 
 	public static boolean isTarget(int picId) {
 		if (picId >= 0 && picId < 8)
@@ -69,7 +69,7 @@ public class LevelConfig {
 	// = -> 13
 	// > -> 14
 	// ? -> 15
-	private static String[] LEVEL_TARGET_FOOD = { "1", "3", "2;", "=>", "<9:", "652", "1", "1", "1", "1" };
+	private static String[] LEVEL_TARGET_FOOD = { "1", "6", "12", "65", "<9", "3>", "65", "12", "65", "12" };
 
 	public static String getTargetFood() {
 		return LEVEL_TARGET_FOOD[CURRENT_LEVEL];
@@ -87,8 +87,8 @@ public class LevelConfig {
 	/**
 	 * Random Config
 	 */
-	private static final String RANDOM_CONFIG[] = { "4111111", "4111111", "4111111", "4111111", "4111111", "4111111",
-			"4111111", "4111111", "4111111", "4111111" };// 每一关的食物比例
+	private static final String RANDOM_CONFIG[] = { "3111111", "3111111", "1211111", "1211111", "2111111", "2111111",
+			"2111111", "2111111", "3322222", "3322222" };// 每一关的食物比例
 
 	/**
 	 * 根据RANDOM_CONFIG中的概率得到随机数

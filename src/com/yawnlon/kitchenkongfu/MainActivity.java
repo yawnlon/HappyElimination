@@ -145,9 +145,8 @@ public class MainActivity extends Activity {
 	@Override
 	public void finish() {
 		super.finish();
-		// ControlCenter.onDestroy();
+		mGLSurfaceView.onDestroy();
 		onDestroy();
-		// System.gc();
 	}
 
 	public void setMarkNum(int num) {

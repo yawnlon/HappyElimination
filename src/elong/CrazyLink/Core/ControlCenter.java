@@ -12,6 +12,7 @@ package elong.CrazyLink.Core;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
@@ -27,6 +28,8 @@ import elong.CrazyLink.CrazyLinkConstent.E_SCENARIO;
 import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.MainActivity;
 import com.yawnlon.kitchenkongfu.R;
+import com.yawnlon.kitchenkongfu.highlevel.HighLevelConfig;
+
 import elong.CrazyLink.Control.CtlDisappear;
 import elong.CrazyLink.Control.CtlExchange;
 import elong.CrazyLink.Control.CtlLifeAdd;
@@ -159,7 +162,24 @@ public class ControlCenter {
 		mControlList = new ArrayList<IControl>();
 		mAutoTipTimer = 0;
 		mMarkNum = 0;
+		mHandler = initHandler();
 		init();
+	}
+
+	public void onDestroy() {
+		if (mControlList != null) {
+			for (IControl i : mControlList)
+				i.end();
+		}
+		if (mDrawExchangeList != null) {
+			for (DrawExchange draw : mDrawExchangeList)
+				draw.control.end();
+		}
+		if (mDrawDisappearList != null) {
+			for (DrawDisappear draw : mDrawDisappearList)
+				draw.control.end();
+		}
+		// mHandler.removeCallbacks();
 	}
 
 	// 初始化逻辑，保证初始化以后的状态没有处于消除状态的
@@ -280,22 +300,30 @@ public class ControlCenter {
 		if (-1 == token)
 			return;
 		int markCount = 0;
+		boolean isTarget = false;
 		for (int i = 0; i < (int) CrazyLinkConstent.GRID_NUM; i++) {
 			for (int j = 0; j < (int) CrazyLinkConstent.GRID_NUM; j++) {
 				if (isInLine(mAnimalPic, i, j) && -1 == mDisappearToken[i][j]) {
 					mEffect[i][j] = EFT_DISAPPEAR;
 					mDisappearToken[i][j] = token;
+					if (LevelConfig.isTarget(mAnimalPic[i][j])) {
+						isTarget = true;
+					}
 					markCount++;
 				}
 			}
 		}
 		if (markCount > 0) {
-			if (3 == markCount)
-				mSound.play(E_SOUND.DISAPPEAR3);
-			else if (4 == markCount)
-				mSound.play(E_SOUND.DISAPPEAR4);
-			else if (markCount >= 5)
-				mSound.play(E_SOUND.DISAPPEAR5);
+			if (isTarget) {
+				if (3 == markCount)
+					mSound.play(E_SOUND.DISAPPEAR3);
+				else if (4 == markCount)
+					mSound.play(E_SOUND.DISAPPEAR4);
+				else if (markCount >= 5)
+					mSound.play(E_SOUND.DISAPPEAR5);
+			} else {
+				mSound.play(E_SOUND.DISAPPEARNO);
+			}
 
 			DrawDisappear drawDisappear = getDrawDisappear(token);
 			if (drawDisappear != null) {
@@ -337,6 +365,8 @@ public class ControlCenter {
 								}
 								mMarkNum--;
 								mMarkEffect[i][j] = MARK_EFFECT_NORMAL;
+								// TODO: 添加冰碎/火灭音效
+								mSound.play(HighLevelConfig.isIce() ? E_SOUND.BREAK_ICE : E_SOUND.BREAK_FIRE);
 							}
 						}
 					}
@@ -890,156 +920,162 @@ public class ControlCenter {
 	public static final int REFRESH_UI = 17;
 
 	// 消息处理
-	public static Handler mHandler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			// process incoming messages here
-			switch (msg.what) {
-			case EXCHANGE_START: {
-				mSound.play(E_SOUND.SLIDE);
-				clearAutoTip();
-				Bundle b = msg.getData();
-				int token = b.getInt("token");
-				int col1 = b.getInt("col1");
-				int col2 = b.getInt("col2");
-				int row1 = b.getInt("row1");
-				int row2 = b.getInt("row2");
-				mEffect[col1][row1] = EFT_EXCHANGE; // 处于交换状态
-				mEffect[col2][row2] = EFT_NONE;
-				setSingleScorePosition(col1, row1);
-				int pic1 = getPicId(col1, row1);
-				int pic2 = getPicId(col2, row2);
-				DrawExchange drawExchange = getDrawExchange(token);
-				if (drawExchange != null)
-					drawExchange.init(token, pic1, col1, row1, pic2, col2, row2);
-				break;
-			}
-			case EXCHANGE_END: {
-				Bundle b = msg.getData();
-				int token = b.getInt("token");
-				int col1 = b.getInt("col1");
-				int col2 = b.getInt("col2");
-				int row1 = b.getInt("row1");
-				int row2 = b.getInt("row2");
-				exchange(mAnimalPic, col1, row1, col2, row2);
-				mEffect[col1][row1] = EFT_NORMAL; // 交换状态解除
-				mEffect[col2][row2] = EFT_NORMAL;
-				markDisappear(token, col1, row1, col2, row2);
-				break;
-			}
-			case LOADING_START:
-				mScene = E_SCENARIO.GAME;
-				mIsLoading = true;
-				drawLoading.control.start();
-				break;
-			case LOADING_END: {
-				mIsLoading = false;
-				mSound.play(E_SOUND.READYGO);
-				CtlTip2 ctl = (CtlTip2) drawTip2.control;
-				ctl.init(E_TIP.READYGO.ordinal()); // ready go
-				mTimer.start();
-				break;
-			}
-			case DISAPPEAR_END: {
-				Bundle b = msg.getData();
-				int token = b.getInt("token");
-				int clearCnt = clearPic(token);
-				unMarkDisappear(token);
-				if (clearCnt > 100) {
-					clearCnt = clearCnt % 100;
-					mTargetScore.award(clearCnt);
+	public static Handler mHandler;
+
+	private Handler initHandler() {
+		return new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				// process incoming messages here
+				switch (msg.what) {
+				case EXCHANGE_START: {
+					mSound.play(E_SOUND.SLIDE);
+					clearAutoTip();
+					Bundle b = msg.getData();
+					int token = b.getInt("token");
+					int col1 = b.getInt("col1");
+					int col2 = b.getInt("col2");
+					int row1 = b.getInt("row1");
+					int row2 = b.getInt("row2");
+					mEffect[col1][row1] = EFT_EXCHANGE; // 处于交换状态
+					mEffect[col2][row2] = EFT_NONE;
+					setSingleScorePosition(col1, row1);
+					int pic1 = getPicId(col1, row1);
+					int pic2 = getPicId(col2, row2);
+					DrawExchange drawExchange = getDrawExchange(token);
+					if (drawExchange != null)
+						drawExchange.init(token, pic1, col1, row1, pic2, col2, row2);
+					break;
 				}
-				mScore.award(clearCnt);
-				if (mScore.getAward() > 0) {
-					CtlTip1 ctl = (CtlTip1) drawTip1.control;
-					if (4 == clearCnt)
-						mSound.play(E_SOUND.COOL);
-					else if (5 == clearCnt)
-						mSound.play(E_SOUND.PERFECT);
-					else if (clearCnt > 5)
-						mSound.play(E_SOUND.SUPER);
-					ctl.init(clearCnt);
-					drawSingleScore.control.start();
+				case EXCHANGE_END: {
+					Bundle b = msg.getData();
+					int token = b.getInt("token");
+					int col1 = b.getInt("col1");
+					int col2 = b.getInt("col2");
+					int row1 = b.getInt("row1");
+					int row2 = b.getInt("row2");
+					exchange(mAnimalPic, col1, row1, col2, row2);
+					mEffect[col1][row1] = EFT_NORMAL; // 交换状态解除
+					mEffect[col2][row2] = EFT_NORMAL;
+					markDisappear(token, col1, row1, col2, row2);
+					break;
 				}
-				// clearInline();
-				freeToken(token);
-				markFill();
-				break;
-			}
-			case FILL_END:
-				unMark(EFT_FILL);
-				if (isNeedFill()) {
-					markFill();
-				} else {
-					// clearStatus(token);
-					if (isNeedClear()) {
-						int token = takeToken();
-						markDisappear(token);
+				case LOADING_START:
+					mScene = E_SCENARIO.GAME;
+					mIsLoading = true;
+					drawLoading.control.start();
+					break;
+				case LOADING_END: {
+					mIsLoading = false;
+					mSound.play(E_SOUND.READYGO);
+					CtlTip2 ctl = (CtlTip2) drawTip2.control;
+					ctl.init(E_TIP.READYGO.ordinal()); // ready go
+					mTimer.start();
+					break;
+				}
+				case DISAPPEAR_END: {
+					boolean isTarget = false;
+					Bundle b = msg.getData();
+					int token = b.getInt("token");
+					int clearCnt = clearPic(token);
+					unMarkDisappear(token);
+					if (clearCnt > 100) {
+						isTarget = true;
+						clearCnt = clearCnt % 100;
+						mTargetScore.award(clearCnt);
 					}
+					mScore.award(clearCnt);
+					if (mScore.getAward() > 0 && isTarget) {
+						CtlTip1 ctl = (CtlTip1) drawTip1.control;
+						if (4 == clearCnt)
+							mSound.play(E_SOUND.COOL);
+						else if (5 == clearCnt)
+							mSound.play(E_SOUND.PERFECT);
+						else if (clearCnt > 5)
+							mSound.play(E_SOUND.SUPER);
+						ctl.init(clearCnt);
+						// drawSingleScore.control.start();
+					}
+					// clearInline();
+					freeToken(token);
+					markFill();
+					break;
 				}
-				clearAutoTip();
-				// if (!canRun())
-				// refresh();
-				break;
-			case SCREEN_TOUCH:
-				Bundle b = msg.getData();
-				int token = b.getInt("token");
-				int col = b.getInt("col1");
-				int row = b.getInt("row1");
-				setSingleScorePosition(col, row);
-				markSpecialAnimal(token, col, row);
-				break;
-			case GEN_SPECIALANIMAL:
-				genSpecialAnimal();
-				break;
-			case READY_GO: {
-				CtlTip2 ctl = (CtlTip2) drawTip2.control;
-				ctl.init(0);
-				break;
+				case FILL_END:
+					unMark(EFT_FILL);
+					if (isNeedFill()) {
+						markFill();
+					} else {
+						// clearStatus(token);
+						if (isNeedClear()) {
+							int token = takeToken();
+							markDisappear(token);
+						}
+					}
+					clearAutoTip();
+					// if (!canRun())
+					// refresh();
+					break;
+				case SCREEN_TOUCH:
+					Bundle b = msg.getData();
+					int token = b.getInt("token");
+					int col = b.getInt("col1");
+					int row = b.getInt("row1");
+					setSingleScorePosition(col, row);
+					markSpecialAnimal(token, col, row);
+					break;
+				case GEN_SPECIALANIMAL:
+					genSpecialAnimal();
+					break;
+				case READY_GO: {
+					CtlTip2 ctl = (CtlTip2) drawTip2.control;
+					ctl.init(0);
+					break;
+				}
+				case LEVEL_UP: {
+					CtlTip2 ctl = (CtlTip2) drawTip2.control;
+					ctl.init(E_TIP.LEVELUP.ordinal()); // level up
+					mSound.play(E_SOUND.LEVELUP);
+					break;
+				}
+				case GAME_OVER_START: {
+					CtlTip2 ctl = (CtlTip2) drawTip2.control;
+					ctl.init(E_TIP.GAMEOVER.ordinal()); // game over
+					mSound.play(E_SOUND.TIMEOVER);
+					break;
+				}
+				case GAME_OVER_END: {
+					// mScene = E_SCENARIO.RESULT;
+					break;
+				}
+				case LIFEADD_START: {
+					CtlLifeAdd ctl = (CtlLifeAdd) drawLifeAdd.control;
+					ctl.init(mScore.getLife());
+					break;
+				}
+				case LIFEADD_END: {
+					mScore.increaseLife();
+					break;
+				}
+				case LIFEDEL_START: {
+					CtlLifeDel ctl = (CtlLifeDel) drawLifeDel.control;
+					ctl.init(mScore.getLife());
+					break;
+				}
+				case LIFEDEL_END: {
+					mScore.decreaseLife();
+					break;
+				}
+				case REFRESH_UI: {
+					((MainActivity) mContext).setScore(mScore.getScore());
+					((MainActivity) mContext).setTargetScore(mTargetScore.getScore());
+					((MainActivity) mContext).setTime(mTimer.getLeftTime());
+					((MainActivity) mContext).setMarkNum(getMarkNum());
+				}
+				}
 			}
-			case LEVEL_UP: {
-				CtlTip2 ctl = (CtlTip2) drawTip2.control;
-				ctl.init(E_TIP.LEVELUP.ordinal()); // level up
-				mSound.play(E_SOUND.LEVELUP);
-				break;
-			}
-			case GAME_OVER_START: {
-				CtlTip2 ctl = (CtlTip2) drawTip2.control;
-				ctl.init(E_TIP.GAMEOVER.ordinal()); // game over
-				mSound.play(E_SOUND.TIMEOVER);
-				break;
-			}
-			case GAME_OVER_END: {
-				// mScene = E_SCENARIO.RESULT;
-				break;
-			}
-			case LIFEADD_START: {
-				CtlLifeAdd ctl = (CtlLifeAdd) drawLifeAdd.control;
-				ctl.init(mScore.getLife());
-				break;
-			}
-			case LIFEADD_END: {
-				mScore.increaseLife();
-				break;
-			}
-			case LIFEDEL_START: {
-				CtlLifeDel ctl = (CtlLifeDel) drawLifeDel.control;
-				ctl.init(mScore.getLife());
-				break;
-			}
-			case LIFEDEL_END: {
-				mScore.decreaseLife();
-				break;
-			}
-			case REFRESH_UI: {
-				((MainActivity) mContext).setScore(mScore.getScore());
-				((MainActivity) mContext).setTargetScore(mTargetScore.getScore());
-				((MainActivity) mContext).setTime(mTimer.getLeftTime());
-				((MainActivity) mContext).setMarkNum(getMarkNum());
-			}
-			}
-		}
-	};
+		};
+	}
 
 	// 控制中心的动作执行
 	public void run() {

@@ -61,6 +61,13 @@ public class HighMainActivity extends MainActivity {
 		}
 	}
 
+	@Override
+	public void finish() {
+		super.finish();
+		mGLSurfaceView.onDestroy();
+		onDestroy();
+	}
+
 	public boolean useSpoonTool() {
 		return HighControlCenter.useSpoonTool();
 	}
