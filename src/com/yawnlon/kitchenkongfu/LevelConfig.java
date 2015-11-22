@@ -6,6 +6,10 @@ public class LevelConfig {
 	 * 当前关卡
 	 */
 	protected static int CURRENT_LEVEL = 0;
+	/**
+	 * 总关卡数
+	 */
+	public final static int LEVEL_NUM = 10;
 
 	public static int getCurrentLevel() {
 		return CURRENT_LEVEL + 1;
@@ -19,7 +23,7 @@ public class LevelConfig {
 	 * Level Config
 	 */
 	private static final int LEVEL_RES[] = { R.drawable.level1, R.drawable.level2, R.drawable.level3, R.drawable.level4,
-			R.drawable.level5, R.drawable.level6, R.drawable.level4, R.drawable.level3, R.drawable.level4,
+			R.drawable.level5, R.drawable.level6, R.drawable.level6, R.drawable.level5, R.drawable.level4,
 			R.drawable.level3 };// 每一关的食物对应的PicId
 	private static final String LEVEL_TARGET[] = { "10000000", "10000000", "11000000", "11000000", "11000000",
 			"11000000", "11000000", "1100000", "1100000", "1100000" };// 每一关的Pic对应的目标食物，例如level1.png香蕉是目标食物，则为10000000
@@ -27,7 +31,7 @@ public class LevelConfig {
 																			// 0代表COLD,
 																			// 1代表HOT
 	private static final int LEVEL_TOTAL_TARGET_SCORE[] = { 420, 600, 720, 660, 660, 780 };// 每一关的目标分数，达到该分数即可过关
-	private static final int LEVEL_MAX_TIME[] = { 50, 50, 60, 60, 60, 60, 10, 80, 80, 80 };// 每一关的最大时间
+	private static final int LEVEL_MAX_TIME[] = { 50, 50, 60, 60, 60, 60, 50, 80, 80, 80 };// 每一关的最大时间
 
 	public static boolean isTarget(int picId) {
 		if (picId >= 0 && picId < 8)
@@ -69,7 +73,7 @@ public class LevelConfig {
 	// = -> 13
 	// > -> 14
 	// ? -> 15
-	private static String[] LEVEL_TARGET_FOOD = { "1", "6", "12", "65", "<9", "3>", "65", "12", "65", "12" };
+	private static String[] LEVEL_TARGET_FOOD = { "1", "6", "12", "65", "<9", "3>", "3>", "<9", "65", "12" };
 
 	public static String getTargetFood() {
 		return LEVEL_TARGET_FOOD[CURRENT_LEVEL];
@@ -78,11 +82,16 @@ public class LevelConfig {
 	/**
 	 * Tool Config
 	 */
-	public static int[] TOOL_NUM = { 1, 3, 3 };
+	public static int[] TOOL_NUM = { 1, 0, 0 };
 	public static int[] TOOL_RESID = { R.drawable.tool_hint, R.drawable.tool_addtime, R.drawable.tool_spoon };
 	public final static int TOOL_HINT = 0;
 	public final static int TOOL_ADDTIME = 1;
 	public final static int TOOL_SPOON = 2;
+	private final static int[] LEVEL_TOOL_AWARD = { 1, 0, 1, 1, 0, 0, 0, 1, 2, 2 };
+
+	public static int getLevelToolAward() {
+		return LEVEL_TOOL_AWARD[CURRENT_LEVEL];
+	}
 
 	/**
 	 * Random Config

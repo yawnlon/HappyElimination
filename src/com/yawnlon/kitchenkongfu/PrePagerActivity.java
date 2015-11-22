@@ -18,9 +18,9 @@ import android.view.View.OnClickListener;
 public class PrePagerActivity extends Activity {
 
 	private ViewPager mPager;
-	private Context mContext;
+	protected Context mContext;
 	private List<View> mViewList;
-	private int mPagerNum;
+	protected int mPagerNum;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

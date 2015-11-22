@@ -981,8 +981,8 @@ public class ControlCenter {
 					unMarkDisappear(token);
 					if (clearCnt > 100) {
 						isTarget = true;
+						mTargetScore.award(clearCnt / 100);
 						clearCnt = clearCnt % 100;
-						mTargetScore.award(clearCnt);
 					}
 					mScore.award(clearCnt);
 					if (mScore.getAward() > 0 && isTarget) {

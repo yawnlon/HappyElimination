@@ -37,7 +37,10 @@ public class LevelInfoActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
-				intent.setClass(LevelInfoActivity.this, MainActivity.class);
+				if (LevelConfig.getCurrentLevel() == 1)
+					intent.setClass(LevelInfoActivity.this, LearnActivity.class);
+				else
+					intent.setClass(LevelInfoActivity.this, MainActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				finish();

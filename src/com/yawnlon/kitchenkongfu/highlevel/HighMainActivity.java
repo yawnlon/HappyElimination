@@ -9,10 +9,15 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import yawnlon.android.widget.YTtfHelper;
 import yawnlon.android.widget.YTtfTextView;
 
 public class HighMainActivity extends MainActivity {
+
+	private ImageView mark;
+	private TextView markNum;
 
 	@Override
 	protected void init() {
@@ -40,6 +45,11 @@ public class HighMainActivity extends MainActivity {
 			}
 		});
 		bGameOver = false;
+		mark = (ImageView) findViewById(R.id.mark);
+		mark.setImageResource(HighLevelConfig.isIce() ? R.drawable.ice_single : R.drawable.fire_single);
+		mark.setVisibility(View.GONE);
+		markNum = (TextView) findViewById(R.id.mark_num);
+		YTtfHelper.applyFont(context, markNum, "lewime.ttf");
 	}
 
 	@Override
@@ -51,6 +61,9 @@ public class HighMainActivity extends MainActivity {
 
 	@Override
 	public void setMarkNum(int num) {
+		if (mark.getVisibility() == View.GONE)
+			mark.setVisibility(View.VISIBLE);
+		markNum.setText(" ×" + num);
 		if (!bGameOver) {
 			if (num == 0) {
 				// 达到目标！

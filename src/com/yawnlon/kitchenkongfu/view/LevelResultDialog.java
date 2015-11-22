@@ -3,6 +3,7 @@ package com.yawnlon.kitchenkongfu.view;
 import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.LevelInfoActivity;
 import com.yawnlon.kitchenkongfu.R;
+import com.yawnlon.kitchenkongfu.highlevel.FinalPagerActivity;
 import com.yawnlon.kitchenkongfu.highlevel.HighLevelInfoActivity;
 import com.yawnlon.kitchenkongfu.highlevel.HighPreActivity;
 
@@ -11,7 +12,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.renderscript.Type;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -64,11 +64,13 @@ public class LevelResultDialog {
 		if (type == SUCCESS) {
 			root.setBackgroundResource(R.drawable.level_result_back_suc);
 			bonusLayout.setVisibility(View.VISIBLE);
+			bonus.setImageResource(LevelConfig.TOOL_RESID[LevelConfig.getLevelToolAward()]);
 			targetlayout.setVisibility(View.GONE);
 			btn.setImageResource(R.drawable.level_result_btn_suc);
 			btn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					LevelConfig.TOOL_NUM[LevelConfig.getLevelToolAward()]++;
 					LevelConfig.setCurrentLevel(LevelConfig.getCurrentLevel() + 1);
 					newGame(true);
 				}
@@ -96,8 +98,10 @@ public class LevelResultDialog {
 			intent.setClass(context, LevelInfoActivity.class);
 		else if (LevelConfig.getCurrentLevel() == 7 && success)
 			intent.setClass(context, HighPreActivity.class);
-		else
+		else if (LevelConfig.getCurrentLevel() <= 10)
 			intent.setClass(context, HighLevelInfoActivity.class);
+		else
+			intent.setClass(context, FinalPagerActivity.class);
 		context.startActivity(intent);
 		context.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 		context.finish();

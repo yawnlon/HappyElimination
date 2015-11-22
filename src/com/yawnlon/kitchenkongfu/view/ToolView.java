@@ -8,7 +8,6 @@ import com.yawnlon.kitchenkongfu.highlevel.HighMainActivity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.PaintDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,6 +54,7 @@ public class ToolView extends FrameLayout {
 		setType();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void setType() {
 		if (type < 0)
 			return;

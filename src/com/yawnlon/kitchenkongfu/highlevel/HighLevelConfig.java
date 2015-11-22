@@ -20,7 +20,7 @@ public class HighLevelConfig extends LevelConfig {
 	/**
 	 * "abcdef"表示初始化时的坐标为(a b), (c d), (e f), 以此类推, a~(0, 6) 注意从左下角开始
 	 */
-	private final static String[] HIGH_LEVEL_MARK_POS = { "33", "33", "33", "33" };
+	private final static String[] HIGH_LEVEL_MARK_POS = { "233354", "4524", "0324523454", "3341643526" };
 
 	public static String getMarkPos() {
 		return HIGH_LEVEL_MARK_POS[CURRENT_LEVEL - 6];

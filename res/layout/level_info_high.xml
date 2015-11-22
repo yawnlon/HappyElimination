@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/dialog"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/high_level_info_dialog"
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -20,7 +20,7 @@
             android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:textColor="#669933"
             android:textSize="24sp" />
 
@@ -68,7 +68,8 @@
             <ImageView
                 android:id="@+id/goal"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
                 android:scaleType="centerInside" />
         </LinearLayout>
     </LinearLayout>
@@ -77,7 +78,7 @@
         android:id="@+id/go"
         android:layout_width="120dp"
         android:layout_height="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/go" />
 
 </LinearLayout>

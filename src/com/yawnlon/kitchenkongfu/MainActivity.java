@@ -117,8 +117,8 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if (mGLSurfaceView != null)
-			mGLSurfaceView.onResume();
+//		if (mGLSurfaceView != null)
+//			mGLSurfaceView.onResume();
 		if (ControlCenter.mTimer != null) {
 			ControlCenter.mTimer.resume();
 			setTime(ControlCenter.mTimer.getLeftTime());
@@ -131,8 +131,8 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		if (mGLSurfaceView != null)
-			mGLSurfaceView.onPause();
+//		if (mGLSurfaceView != null)
+//			mGLSurfaceView.onPause();
 		if (ControlCenter.mTimer != null)
 			ControlCenter.mTimer.pause();
 	}

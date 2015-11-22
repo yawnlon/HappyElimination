@@ -1,5 +1,6 @@
 package com.yawnlon.kitchenkongfu.highlevel;
 
+import com.yawnlon.kitchenkongfu.LevelConfig;
 import com.yawnlon.kitchenkongfu.R;
 
 import android.app.Activity;
@@ -29,7 +30,7 @@ public class HighChooseYinYangActivity extends Activity implements OnClickListen
 		yin.setOnClickListener(this);
 		yang.setOnClickListener(this);
 		next.setOnClickListener(this);
-
+		LevelConfig.TOOL_NUM[2]++;
 	}
 
 	private void clearSelected() {
